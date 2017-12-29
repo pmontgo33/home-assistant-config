@@ -1,0 +1,130 @@
+#################################################################
+## HVAC Automation
+#################################################################
+
+  - alias: Humidifier ON for bed
+    initial_state: True
+    hide_entity: False
+    trigger:
+      - platform: time
+        at: '21:00:00'
+      - platform: state
+        entity_id: sensor.away_mode
+        to: 'Home'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sensor.away_mode
+          state: 'Home'
+        - condition: time
+          after: '21:00:00'
+        - condition: template
+          value_template: "{{ is_state_attr('climate.upstairs', 'operation_mode', 'heat') }}"
+    action:
+      service: switch.turn_on
+      entity_id: switch.humidifier_switch
+
+  - alias: Humidifier OFF for bed
+    initial_state: True
+    hide_entity: False
+    trigger:
+      platform: time
+      at: '04:00:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.humidifier_switch
+      
+  - alias: Away/Sleep Change
+    trigger:
+      - platform: state
+        entity_id: input_boolean.sleep_mode
+      - platform: state
+        entity_id: input_boolean.away_mode
+    action:
+      - delay: 0:00:05
+      - service: climate.set_temperature
+        entity_id: climate.downstairs_heating_1, climate.downstairs_cooling_1
+        data_template:
+          temperature: >
+            {% if is_state('sensor.away_mode', 'Away') %}
+              {{ float(states.sensor.dstairs_away_set_point.state) }}
+            {% else %}
+              {{ float(states.sensor.dstairs_home_set_point.state) }}
+            {% endif %}
+
+  - alias: Leave Work or Staten Island
+    trigger:
+      - platform: zone
+        entity_id: device_tracker.pat_phone
+        zone: zone.work
+        event: leave
+      - platform: zone
+        entity_id: device_tracker.pat_phone
+        zone: zone.staten_island
+        event: leave
+      - platform: zone
+        entity_id: device_tracker.lina_phone
+        zone: zone.work
+        event: leave
+      - platform: zone
+        entity_id: device_tracker.lina_phone
+        zone: zone.staten_island
+        event: leave
+    condition:
+      condition: or
+      conditions:
+        - condition: zone
+          entity_id: device_tracker.pat_phone
+          zone: zone.leave_work
+        - condition: zone
+          entity_id: device_tracker.pat_phone
+          zone: zone.leave_staten_island
+        - condition: zone
+          entity_id: device_tracker.lina_phone
+          zone: zone.leave_work
+        - condition: zone
+          entity_id: device_tracker.lina_phone
+          zone: zone.leave_staten_island
+    action:
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.upstairs
+          away_mode: 'off'
+      - service: notify.html5
+        data:
+          message: "Coming home, preparing house."
+  
+  ### Automations for the Whole Home HVAC Mode Selecter ###
+  - alias: Any HVAC mode Change, change Whole home selecter
+    trigger:
+      - platform: state
+        entity_id: sensor.upstairs_op_mode, sensor.downstairs_op_mode
+    action:
+      - delay: '00:00:03'
+      - service: input_select.select_option
+        data_template: 
+          entity_id: input_select.home_climate_mode
+          option: >
+            {% if states('sensor.upstairs_op_mode') == states('sensor.downstairs_op_mode') %}
+              {{ states('sensor.upstairs_op_mode') }}
+            {% else %}
+              Separate
+            {% endif %}
+
+  - alias: Change whole home selecter, change all HVAC modes
+    trigger:
+      - platform: state
+        entity_id: input_select.home_climate_mode
+    action:
+      - service: climate.set_operation_mode
+        data_template:
+          entity_id: climate.downstairs_heating_1
+          operation_mode: "{{ states('input_select.home_climate_mode') }}"
+      # - service: notify.html5
+        # data:
+          # message: "{{ states('input_select.home_climate_mode')|lower }}"
+      - service: climate.set_operation_mode
+        data_template:
+          entity_id: climate.upstairs
+          operation_mode: "{{ states('input_select.home_climate_mode')|lower }}"

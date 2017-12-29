@@ -1,0 +1,81 @@
+timed_deck_light:
+  alias: Turn on deck light and set timer
+  sequence:
+  - service: script.turn_off
+    data:
+      entity_id: script.timer_off
+  - service: switch.turn_on
+    data:
+      entity_id: switch.deck_light_switch
+  - service: script.turn_on
+    data:
+      entity_id: script.timer_off
+timer_off:
+  alias: Turn off deck light after 5 minutes
+  sequence:
+  - delay:
+      minutes: 5
+  - service: switch.turn_off
+    data:
+      entity_id: switch.deck_light_switch
+dim_master_bath:
+  alias: Dim Master Bathroom Lights and Turn Off
+  sequence:
+  - alias: Master Bath Dim
+    data:
+      brightness: 5
+      entity_id: light.master_bathroom_light_level
+    service: light.turn_on
+  - alias: Master Bath Off
+    data:
+      entity_id: light.master_bathroom_light_level
+    service: light.turn_off
+sleep_script:
+  alias: Sleep Script
+  sequence:
+  - alias: Dim Master Bathroom Lights and Turn Off
+    data: {}
+    service: script.dim_master_bath
+  - alias: Turn off Christmas Tree
+    data:
+      entity_id: switch.christmas_tree_switch
+    service: switch.turn_off
+brighten_master_bath:
+  alias: Brighten Master Bathroom Lights and Turn Off
+  sequence:
+  - data:
+      brightness: 255
+      entity_id: light.master_bathroom_light_level
+    service: light.turn_on
+  - data:
+      entity_id: light.master_bathroom_light_level
+    service: light.turn_off
+wake_script:
+  alias: Wake Script
+  sequence:
+  - alias: Brighten Master Bathroom Lights and Turn Off
+    data: {}
+    service: script.brighten_master_bath
+smoke_alarm:
+  alias: Smoke Alarm
+  sequence:
+  - alias: Activate MQTT Smoke Detector Sensor
+    service: mqtt.publish
+    data:
+      topic: home/safety/smoke_detector
+      payload_template: 'Last Alarm: {{ now().month }}/{{ now().day }}/{{ now().year
+        }} @ {{ now().hour }}:{{ now().minute }}:{{ now().second }}'
+  - alias: Turn on Smoke Alarm Switch
+    service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.smoke_alarm
+  - alias: Activate Front Irrigation
+    service: switch.turn_on
+    data:
+      entity_id: switch.front_main
+  - delay:
+      minutes: 10
+  - alias: Activate Back Irrigation
+    service: switch.turn_on
+    data:
+      entity_id: switch.back_walkway

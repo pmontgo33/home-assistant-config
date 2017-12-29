@@ -1,0 +1,54 @@
+#################################################################
+## Sleep Mode
+#################################################################
+
+  - alias: Sleep Mode ON
+    trigger:
+      - platform: time
+        at: '22:30:00'
+      - platform: event
+        event_type: homeassistant_start
+    condition:
+      condition: time
+      after: '22:30:00'
+      before: '4:15:00'
+    action:
+      service: input_boolean.turn_on
+      entity_id: input_boolean.sleep_mode
+  
+  - alias: Sleep Mode OFF No Work
+    trigger:
+      platform: time
+      at: '7:00:00'
+    action:
+      service: input_boolean.turn_off
+      entity_id: input_boolean.sleep_mode
+
+  # - alias: Sleep Mode OFF Work
+    # trigger:
+      # platform: time
+      # at: '4:15:00'
+    # condition:
+      # condition: time
+      # weekday:
+        # - mon
+        # - tue
+        # - thu
+    # action:
+      # service: input_boolean.turn_off
+      # entity_id: input_boolean.sleep_mode
+
+  # - alias: Sleep Mode OFF No Work
+    # trigger:
+      # platform: time
+      # at: '7:00:00'
+    # condition:
+      # condition: time
+      # weekday:
+        # - wed
+        # - fri
+        # - sat
+        # - sun
+    # action:
+      # service: input_boolean.turn_off
+      # entity_id: input_boolean.sleep_mode

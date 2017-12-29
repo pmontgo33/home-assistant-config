@@ -1,0 +1,78 @@
+switch.humidifier_switch:
+  friendly_name: Bedroom Humidifier
+  icon: mdi:water
+switch.living_room_ligh_switch:
+  friendly_name: Living Room Lights
+  icon: mdi:lamp
+switch.bedroom_light_switch:
+  friendly_name: Bedroom Light
+  icon: mdi:lightbulb
+light.master_bathroom_light_level:
+  friendly_name: Master Bathroom Light
+  icon: mdi:lightbulb
+switch.front_lights_switch:
+  friendly_name: Front Lights
+  icon: mdi:lightbulb
+switch.deck_light_switch:
+  friendly_name: Deck Light
+  icon: mdi:lightbulb
+fan.bedroom_fan_level:
+  friendly_name: Bedroom Fan
+  icon: mdi:fan
+switch.driveway_switch:
+  friendly_name: Driveway
+  icon: mdi:car
+sensor.upstairs_thermostat_humidity:
+  friendly_name: Upstairs Humidity
+  icon: mdi:water-percent
+sensor.upstairs_thermostat_hvac_state:
+  friendly_name: Upstairs HVAC State
+sensor.home_to_staten_island:
+  icon: mdi:car
+sensor.home_to_city:
+  icon: mdi:train
+sensor.pat_to_home:
+  icon: mdi:car
+sensor.lina_to_home:
+  icon: mdi:car
+climate.downstairs_cooling_1:
+  friendly_name: Downstairs Cooling
+climate.downstairs_heating_1:
+  friendly_name: Downstairs Heating
+sensor.downstairs_battery_level:
+  friendly_name: Downstairs Battery
+  icon: mdi:battery-alert
+sensor.downstairs_relative_humidity:
+  friendly_name: Downstairs Humidity
+  icon: mdi:water-percent
+sensor.downstairs_temperature:
+  hidden: true
+switch.front_strip:
+  icon: mdi:water-pump
+switch.front_main:
+  icon: mdi:water-pump
+switch.back_main:
+  icon: mdi:water-pump
+switch.back_walkway:
+  icon: mdi:water-pump
+switch.vegetable_garden:
+  icon: mdi:water-pump
+group.all_automations:
+  hidden: false
+  friendly_name: Automations
+group.all_scripts:
+  hidden: false
+  friendly_name: Scripts
+sensor.smoke_detector:
+  friendly_name: Smoke Detector
+  icon: mdi:fire
+input_select.home_climate_mode:
+  icon: mdi:nest-thermostat
+switch.christmas_tree_switch:
+  icon: mdi:pine-tree
+  friendly_name: Christmas Tree
+group.locations:
+  entity_id:
+  - device_tracker.pat_phone
+  - device_tracker.lina_phone
+  - group.travel_times

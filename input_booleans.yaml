@@ -1,0 +1,15 @@
+#################################################################
+## Input Booleans
+#################################################################
+
+  sleep_mode:
+    name: Sleep Mode
+    icon: mdi:sleep
+  
+  away_mode:
+    name: Away Mode
+    icon: mdi:home-outline
+    
+  smoke_alarm:
+    name: Smoke Alarm
+    icon: mdi:alarm-light

@@ -1,0 +1,26 @@
+#################################################################
+## Other Automations
+#################################################################
+
+  - alias: Christmas Tree ON at 4pm
+    trigger:
+      - platform: time
+        at: '16:00:00'
+      - platform: event
+        event_type: homeassistant_start
+    condition:
+      condition: time
+      after: '16:00:00'
+      before: '4:15:00'
+    action:
+      service: switch.turn_on
+      entity_id: switch.christmas_tree_switch
+  
+  # - alias: Christmas Tree OFF
+    # trigger:
+      # platform: state
+      # entity_id: input_boolean.sleep_mode
+      # to: 'on'
+    # action:
+      # service: switch.turn_off
+      # entity_id: switch.christmas_tree_switch

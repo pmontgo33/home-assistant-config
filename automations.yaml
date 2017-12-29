@@ -1,0 +1,63 @@
+- action:
+  - alias: Outside Lights Group OFF
+    data:
+      entity_id: group.outside_lights
+    service: homeassistant.turn_off
+  - alias: Deck Light Off
+    data:
+      entity_id: group.outside_lights
+    service: switch.turn_off
+  alias: Outside Lights OFF at sunrise
+  condition: []
+  id: '1505425124621'
+  trigger:
+  - event: sunrise
+    platform: sun
+- action:
+  - alias: Front Lights ON
+    data:
+      entity_id: switch.front_lights_switch
+    service: switch.turn_on
+  alias: Front Lights ON at sunset
+  condition: []
+  id: '1505425124887'
+  trigger:
+  - event: sunset
+    platform: sun
+- action:
+  - alias: Run Sleep Script
+    service: script.sleep_script
+  alias: Sleep Mode ON Run Script
+  condition: []
+  id: '1505868127538'
+  trigger:
+  - entity_id: input_boolean.sleep_mode
+    from: 'off'
+    platform: state
+    to: 'on'
+- action:
+  - alias: Driveway Light ON
+    data:
+      entity_id: switch.driveway_switch
+    service: switch.turn_on
+  alias: Driveway Light ON w/ Deck Light
+  condition: []
+  id: '1510840689504'
+  trigger:
+  - entity_id: switch.deck_light_switch
+    from: 'off'
+    platform: state
+    to: 'on'
+- action:
+  - alias: Turn off Driveway Light
+    data:
+      entity_id: switch.driveway_switch
+    service: switch.turn_off
+  alias: Driveway Light OFF w/ Deck Light
+  condition: []
+  id: '1510842735261'
+  trigger:
+  - entity_id: switch.deck_light_switch
+    from: 'on'
+    platform: state
+    to: 'off'

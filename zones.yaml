@@ -1,0 +1,29 @@
+#################################################################
+## Zones
+#################################################################
+
+  - name: Home
+    latitude: !secret home_latitude
+    longitude: !secret home_longitude
+    radius: 500
+    icon: mdi:home
+    
+  - name: Work
+    latitude: !secret work_latitude
+    longitude: !secret work_longitude
+    radius: 5000
+    icon: mdi:city
+  - name: Leave Work
+    latitude: !secret leave_work_latitude
+    longitude: !secret leave_work_longitude
+    radius: 5000
+    
+  - name: Staten Island
+    latitude: !secret si_latitude
+    longitude: !secret si_longitude
+    radius: 20000
+    icon: mdi:human-male-female
+  - name: Leave Staten Island
+    latitude: !secret leave_si_latitude
+    longitude: !secret leave_si_longitude
+    radius: 20000

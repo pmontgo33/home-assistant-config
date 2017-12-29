@@ -1,0 +1,11 @@
+#################################################################
+## Input Booleans
+#################################################################
+
+  home_climate_mode:
+    name: Whole Home Climate Mode
+    options:
+      - "Off"
+      - "Cool"
+      - "Heat"
+      - "Separate"
