@@ -26,6 +26,11 @@ http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
 
+google_domains:
+  domain: hass.montyavo.com
+  username: !secret google_domains_username
+  password: !secret google_domains_password
+
 # Checks for available updates
 updater:
   # Optional, allows Home Assistant developers to focus on popular components.
