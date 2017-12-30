@@ -60,11 +60,9 @@ logbook:
       - sensor.pws_precip_1d_in
       - sensor.pws_precip_1d
 
-### MAP ###
 map:
-
-# Track the sun
 sun:
+python_script:
 
 ### HTML NOTIFICATION ###
 notify:
