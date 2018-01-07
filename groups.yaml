@@ -8,6 +8,7 @@
     name: Modes
     control: hidden
     entities:
+      - sensor.house_mode
       - input_boolean.away_mode
       - input_boolean.sleep_mode
       - input_select.home_climate_mode
@@ -45,9 +46,16 @@
       - climate.downstairs_heating_1
       - climate.downstairs_cooling_1
       - sensor.downstairs_relative_humidity
-      - sensor.downstairs_battery_level
-      - sensor.dstairs_home_set_point
-      - sensor.dstairs_away_set_point
+
+  downstairs_setpoints:
+    name: Downstairs Setpoint Temps
+    entities:
+      - input_number.dstairs_home_heat_temp
+      - input_number.dstairs_away_heat_temp
+      - input_number.dstairs_sleep_heat_temp
+      - input_number.dstairs_home_cool_temp
+      - input_number.dstairs_away_cool_temp
+      - input_number.dstairs_sleep_cool_temp
   
   upstairs_climate:
     name: Upstairs Climate
@@ -203,15 +211,16 @@
     entities:
       - group.weather
   
-  ### SRIPTS/AUTOMATIONS VIEW ###
+  ### UTILITIES VIEW ###
   utilities:
     name: Utilities
     icon: mdi:tune
     view: yes
     entities:
+      - group.downstairs_setpoints
+      - group.speedtest
       - group.all_automations
       - group.all_scripts
-      - group.speedtest
   
   ### TEST VIEW ###
   test_view:
@@ -221,6 +230,4 @@
     entities:
       - sensor.upstairs_op_mode
       - sensor.downstairs_op_mode
-      - sensor.dstairs_away_set_point
-      - sensor.dstairs_home_set_point
-      - sensor.upstairs_away_mode_test
+      - group.multisensor

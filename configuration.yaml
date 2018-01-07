@@ -13,6 +13,8 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
+logger:
+  default: info
 # Enables the frontend
 frontend:
 
@@ -114,16 +116,6 @@ ios:
 ### IFTTT Config ###
 ifttt:
   key: !secret ifttt_key
-  
-### Rachio ###
-switch:
-  - platform: rachio
-    access_token: !secret rachio_token
-panel_iframe:
-  rachio:
-    title: Rachio
-    url: "https://app.rach.io"
-    icon: mdi:water-pump
     
 ### Device Tracking ###
 device_tracker:
@@ -139,20 +131,28 @@ device_tracker:
 tts:
   - platform: google
   
-# ffmpeg:
-  # ffmpeg_bin: /usr/bin/ffmpeg
-# camera:
-  # - platform: ffmpeg
-    # name: Bedroom Camera
-    # input: /dev/video0
-### MOTION CAMERA ###
+ffmpeg:
+#   ffmpeg_bin: /usr/bin/ffmpeg
 camera:
-  - platform: local_file
+  - platform: ffmpeg
     name: Bedroom Camera
-    file_path: /share/motion/lastsnap.jpg
+    input: /dev/video0
+### MOTION CAMERA ###
+# camera:
+#   - platform: local_file
+#     name: Bedroom Camera
+#     file_path: /share/motion/lastsnap.jpg
 
-    
+### Rachio ###
+switch:
+  - platform: rachio
+    access_token: !secret rachio_token
+
 panel_iframe:
+  rachio:
+    title: Rachio
+    url: "https://app.rach.io"
+    icon: mdi:water-pump
   terminal:
     title: Terminal
     icon: mdi:console
@@ -166,4 +166,5 @@ script: !include scripts.yaml
 zone: !include zones.yaml
 input_boolean: !include input_booleans.yaml
 input_select: !include input_selects.yaml
+input_number: !include input_numbers.yaml
 alert: !include alerts.yaml

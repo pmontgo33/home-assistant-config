@@ -33,13 +33,16 @@ dim_master_bath:
 sleep_script:
   alias: Sleep Script
   sequence:
-  - alias: Dim Master Bathroom Lights and Turn Off
-    data: {}
-    service: script.dim_master_bath
   - alias: Turn off Christmas Tree
     data:
       entity_id: switch.christmas_tree_switch
     service: switch.turn_off
+  - delay:
+      minutes: 30
+  - wait_template: "{{ states.light.master_bathroom_light_level.state == 'off' }}"
+  - alias: Dim Master Bathroom Lights and Turn Off
+    data: {}
+    service: script.dim_master_bath
 brighten_master_bath:
   alias: Brighten Master Bathroom Lights and Turn Off
   sequence:

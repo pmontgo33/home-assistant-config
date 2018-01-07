@@ -3,11 +3,11 @@
 #################################################################
 
   sleep_mode:
-    name: Sleep Mode
+    name: Sleep
     icon: mdi:sleep
   
   away_mode:
-    name: Away Mode
+    name: Away
     icon: mdi:home-outline
     
   smoke_alarm:

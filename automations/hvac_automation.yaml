@@ -9,13 +9,13 @@
       - platform: time
         at: '21:00:00'
       - platform: state
-        entity_id: sensor.away_mode
+        entity_id: sensor.house_mode
         to: 'Home'
     condition:
       condition: and
       conditions:
         - condition: state
-          entity_id: sensor.away_mode
+          entity_id: sensor.house_mode
           state: 'Home'
         - condition: time
           after: '21:00:00'
@@ -35,23 +35,13 @@
       service: switch.turn_off
       entity_id: switch.humidifier_switch
       
-  - alias: Away/Sleep Change
+  - alias: Home Mode Change, Set Downstairs Setpoint
     trigger:
       - platform: state
-        entity_id: input_boolean.sleep_mode
-      - platform: state
-        entity_id: input_boolean.away_mode
+        entity_id: sensor.house_mode
     action:
       - delay: 0:00:05
-      - service: climate.set_temperature
-        entity_id: climate.downstairs_heating_1, climate.downstairs_cooling_1
-        data_template:
-          temperature: >
-            {% if is_state('sensor.away_mode', 'Away') %}
-              {{ float(states.sensor.dstairs_away_set_point.state) }}
-            {% else %}
-              {{ float(states.sensor.dstairs_home_set_point.state) }}
-            {% endif %}
+      - service: python_script.set_dstairs_temp_setpoint
 
   - alias: Leave Work or Staten Island
     trigger:
@@ -121,10 +111,26 @@
         data_template:
           entity_id: climate.downstairs_heating_1
           operation_mode: "{{ states('input_select.home_climate_mode') }}"
-      # - service: notify.html5
-        # data:
-          # message: "{{ states('input_select.home_climate_mode')|lower }}"
       - service: climate.set_operation_mode
         data_template:
           entity_id: climate.upstairs
           operation_mode: "{{ states('input_select.home_climate_mode')|lower }}"
+          
+          
+  # - alias: Away/Sleep Change
+  #   trigger:
+  #     - platform: state
+  #       entity_id: input_boolean.sleep_mode
+  #     - platform: state
+  #       entity_id: input_boolean.away_mode
+  #   action:
+  #     - delay: 0:00:05
+  #     - service: climate.set_temperature
+  #       entity_id: climate.downstairs_heating_1, climate.downstairs_cooling_1
+  #       data_template:
+  #         temperature: >
+  #           {% if is_state('sensor.away_mode', 'Away') %}
+  #             {{ float(states.sensor.dstairs_away_set_point.state) }}
+  #           {% else %}
+  #             {{ float(states.sensor.dstairs_home_set_point.state) }}
+  #           {% endif %}

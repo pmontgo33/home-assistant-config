@@ -61,3 +61,8 @@
     from: 'on'
     platform: state
     to: 'off'
+- action: []
+  alias: New Automation
+  condition: []
+  id: '1514905200298'
+  trigger: []
