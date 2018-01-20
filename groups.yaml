@@ -165,9 +165,10 @@
   upstairs_media:
     name: Upstairs Media
     entities:
-      - media_player.bedroom_tv
+      - media_player.upstairs
       - media_player.nursery_speaker
       - media_player.3rd_floor_speaker
+      - media_player.bedroom_tv
       
   ### HOME VIEW ###
   default_view:

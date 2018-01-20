@@ -29,7 +29,7 @@ http:
   ssl_key: /ssl/privkey.pem
 
 google_domains:
-  domain: hass.montyavo.com
+  domain: !secret google_domains_domain
   username: !secret google_domains_username
   password: !secret google_domains_password
 
