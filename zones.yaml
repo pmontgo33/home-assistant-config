@@ -27,3 +27,13 @@
     latitude: !secret leave_si_latitude
     longitude: !secret leave_si_longitude
     radius: 20000
+    
+  - name: Larry
+    latitude: !secret larry_latitude
+    longitude: !secret larry_longitude
+    radius: 5000
+    icon: mdi:calculator
+  - name: Leave Larry
+    latitude: !secret leave_larry_latitude
+    longitude: !secret leave_larry_longitude
+    radius: 5000

@@ -46,9 +46,11 @@
       - climate.downstairs_heating_1
       - climate.downstairs_cooling_1
       - sensor.downstairs_relative_humidity
+      - group.downstairs_setpoints
 
   downstairs_setpoints:
     name: Downstairs Setpoint Temps
+    icon: mdi:settings
     entities:
       - input_number.dstairs_home_heat_temp
       - input_number.dstairs_away_heat_temp
@@ -62,20 +64,49 @@
     control: hidden
     entities:
       - climate.upstairs
-      - sensor.upstairs_thermostat_hvac_state
       - sensor.upstairs_thermostat_humidity
-      - binary_sensor.upstairs_thermostat_fan
+      - group.upstairs_climate_status
+  upstairs_climate_status:
+    name: Status
+    control: hidden
+    icon: mdi:settings
+    entities:
       - binary_sensor.upstairs_thermostat_online
+      - sensor.upstairs_thermostat_hvac_state
+      - binary_sensor.upstairs_thermostat_fan
   
   irrigation:
     name: Irrigation
     control: hidden
     entities:
+      - group.front_irrigation
+      - group.back_irrigation
+  front_irrigation:
+    name: Front Zones
+    control: hidden
+    icon: mdi:water-pump
+    entities:
       - switch.front_strip
       - switch.front_main
+  back_irrigation:
+    name: Front Zones
+    control: hidden
+    icon: mdi:water-pump
+    entities:
       - switch.back_main
       - switch.back_walkway
       - switch.vegetable_garden
+  
+  water_devices:
+    name: Water Devices
+    control: hidden
+    entities:
+      - switch.main_water_valve_switch
+      - binary_sensor.laundry_leak_flood
+      - binary_sensor.laundry_leak_general
+      - binary_sensor.laundry_leak_sensor
+      - binary_sensor.laundry_leak_sensor_2
+      - binary_sensor.laundry_leak_sensor_3
   
   multisensor:
     name: Multisensor
@@ -123,6 +154,20 @@
     entities:
       - input_boolean.smoke_alarm
       - sensor.smoke_detector
+  
+  downstairs_media:
+    name: Downstairs Media
+    entities:
+      - media_player.first_floor
+      - media_player.living_room_speaker
+      - media_player.kitchen_speaker
+      - media_player.living_room_tv
+  upstairs_media:
+    name: Upstairs Media
+    entities:
+      - media_player.bedroom_tv
+      - media_player.nursery_speaker
+      - media_player.3rd_floor_speaker
       
   ### HOME VIEW ###
   default_view:
@@ -144,10 +189,7 @@
     entities:
       - group.downstairs_lights
       - group.downstairs_climate
-      - media_player.living_room_speaker
-      - media_player.kitchen_speaker
-      - media_player.first_floor
-      - media_player.living_room_tv
+      - group.downstairs_media
   
   ### UPSTAIRS VIEW ###
   upstairs:
@@ -159,11 +201,8 @@
       - group.nursery
       - group.upstairs_climate
       - camera.bedroom_camera
-      - media_player.bedroom_tv
-      - media_player.nursery_speaker
-      - media_player.3rd_floor_speaker
+      - group.upstairs_media
       - sensor.upstairs_thermostat_humidity
-      # - group.multisensor
 
   
   ### OUTSIDE VIEW ###
@@ -194,14 +233,9 @@
     icon: mdi:cast
     view: yes
     entities:
-      - media_player.bedroom_tv
-      - media_player.living_room_speaker
-      - media_player.kitchen_speaker
-      - media_player.living_room_tv
-      - media_player.first_floor
-      - media_player.nursery_speaker
-      - media_player.3rd_floor_speaker
       - media_player.all_speakers
+      - group.downstairs_media
+      - group.upstairs_media
 
   ### WEATHER VIEW ###
   weather_view:
@@ -217,7 +251,6 @@
     icon: mdi:tune
     view: yes
     entities:
-      - group.downstairs_setpoints
       - group.speedtest
       - group.all_automations
       - group.all_scripts
@@ -230,4 +263,12 @@
     entities:
       - sensor.upstairs_op_mode
       - sensor.downstairs_op_mode
+      - sensor.pi_hole
+      - sensor.plex
+      - sensor.disk_use_percent
+      - sensor.ram_used
+      - sensor.cpu_used
+      - sensor.since_last_boot
       - group.multisensor
+      - group.water_devices
+      - sensor.test_zone

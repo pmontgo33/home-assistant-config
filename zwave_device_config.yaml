@@ -1,3 +1,6 @@
 light.master_bathroom_light_level:
   ignored: false
   polling_intensity: 1
+switch.deck_light_switch:
+  ignored: false
+  polling_intensity: 1

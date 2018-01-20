@@ -16,7 +16,7 @@
       service: input_boolean.turn_on
       entity_id: input_boolean.sleep_mode
   
-  - alias: Sleep Mode OFF No Work
+  - alias: Sleep Mode OFF
     trigger:
       platform: time
       at: '7:00:00'

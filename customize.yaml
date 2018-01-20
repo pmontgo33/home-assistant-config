@@ -70,3 +70,14 @@ group.locations:
   - device_tracker.pat_phone
   - device_tracker.lina_phone
   - group.travel_times
+group.water_devices:
+  entity_id:
+  - switch.main_water_valve_switch
+  - binary_sensor.laundry_leak_flood
+  - binary_sensor.laundry_leak_general
+  - binary_sensor.laundry_leak_sensor
+  - binary_sensor.laundry_leak_sensor_2
+  - binary_sensor.laundry_leak_sensor_3
+  - sensor.laundry_leak_temperature
+  - sensor.laundry_leak_alarm_type
+  - sensor.laundry_leak_alarm_level

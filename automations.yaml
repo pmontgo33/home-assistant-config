@@ -27,14 +27,13 @@
 - action:
   - alias: Run Sleep Script
     service: script.sleep_script
-  alias: Sleep Mode ON Run Script
+  alias: Sleep Mode Run Script
   condition: []
   id: '1505868127538'
   trigger:
-  - entity_id: input_boolean.sleep_mode
-    from: 'off'
+  - entity_id: sensor.house_mode
     platform: state
-    to: 'on'
+    to: Sleep
 - action:
   - alias: Driveway Light ON
     data:
@@ -61,8 +60,3 @@
     from: 'on'
     platform: state
     to: 'off'
-- action: []
-  alias: New Automation
-  condition: []
-  id: '1514905200298'
-  trigger: []

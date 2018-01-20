@@ -15,12 +15,21 @@
     action:
       service: switch.turn_on
       entity_id: switch.christmas_tree_switch
-  
-  # - alias: Christmas Tree OFF
-    # trigger:
-      # platform: state
-      # entity_id: input_boolean.sleep_mode
-      # to: 'on'
-    # action:
-      # service: switch.turn_off
-      # entity_id: switch.christmas_tree_switch
+      
+  - alias: Smoke Alarm ON
+    trigger:
+      - platform: state
+        entity_id: input_boolean.smoke_alarm
+        to: 'on'
+    action:
+      - service: mqtt.publish
+        data:
+          topic: home/safety/smoke_detector
+          payload_template: 'Last Alarm: {{ now().month }}/{{ now().day }}/{{ now().year}} @ {{ now().hour }}:{{ now().minute }}:{{ now().second }}'
+      - service: switch.turn_on
+        data:
+          entity_id: switch.front_main
+      - delay: 0:10
+      - service: switch.turn_on
+        data:
+          entity_id: switch.back_walkway

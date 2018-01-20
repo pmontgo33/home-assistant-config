@@ -61,6 +61,7 @@ logbook:
       - sensor.pws_weather
       - sensor.pws_precip_1d_in
       - sensor.pws_precip_1d
+      - sensor.since_last_boot
 
 map:
 sun:
@@ -82,6 +83,13 @@ mqtt:
 ### Z-WAVE CONFIG ###
 zwave:
   usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+  polling_interval: 30000
+  device_config:
+    switch.deck_light:
+      polling_intensity: 1
+    light.master_bathroom_light_level:
+      polling_intensity: 1
 
 ### GOOGLE ASSISTANT ###
 google_assistant:
@@ -149,6 +157,10 @@ switch:
     access_token: !secret rachio_token
 
 panel_iframe:
+  ide:
+    title: IDE
+    icon: mdi:language-python
+    url: http://hassio.local:8321
   rachio:
     title: Rachio
     url: "https://app.rach.io"

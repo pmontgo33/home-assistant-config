@@ -1,0 +1,89 @@
+#################################################################
+## Zone Automations
+#################################################################
+
+  - alias: Coming Home
+    trigger:
+      - platform: zone
+        entity_id: device_tracker.pat_phone, device_tracker.lina_phone
+        zone: zone.work
+        event: leave
+      - platform: zone
+        entity_id: device_tracker.pat_phone, device_tracker.lina_phone
+        zone: zone.staten_island
+        event: leave
+      - platform: zone
+        entity_id: device_tracker.pat_phone, device_tracker.lina_phone
+        zone: zone.larry
+        event: leave
+    condition:
+      condition: or
+      conditions:
+        - condition: zone
+          entity_id: device_tracker.pat_phone
+          zone: zone.leave_work
+        - condition: zone
+          entity_id: device_tracker.lina_phone
+          zone: zone.leave_work
+        - condition: zone
+          entity_id: device_tracker.pat_phone
+          zone: zone.leave_staten_island
+        - condition: zone
+          entity_id: device_tracker.lina_phone
+          zone: zone.leave_staten_island
+        - condition: zone
+          entity_id: device_tracker.pat_phone
+          zone: zone.leave_larry
+        - condition: zone
+          entity_id: device_tracker.lina_phone
+          zone: zone.leave_larry
+    action:
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.upstairs
+          away_mode: 'off'
+      - service: notify.html5
+        data:
+          message: "Coming home, preparing house."
+          
+  # - alias: Coming Home
+  #   trigger:
+  #     - platform: zone
+  #       entity_id: device_tracker.pat_phone
+  #       zone: zone.work
+  #       event: leave
+  #     - platform: zone
+  #       entity_id: device_tracker.pat_phone
+  #       zone: zone.staten_island
+  #       event: leave
+  #     - platform: zone
+  #       entity_id: device_tracker.lina_phone
+  #       zone: zone.work
+  #       event: leave
+  #     - platform: zone
+  #       entity_id: device_tracker.lina_phone
+  #       zone: zone.staten_island
+  #       event: leave
+  #   condition:
+  #     condition: or
+  #     conditions:
+  #       - condition: zone
+  #         entity_id: device_tracker.pat_phone
+  #         zone: zone.leave_work
+  #       - condition: zone
+  #         entity_id: device_tracker.pat_phone
+  #         zone: zone.leave_staten_island
+  #       - condition: zone
+  #         entity_id: device_tracker.lina_phone
+  #         zone: zone.leave_work
+  #       - condition: zone
+  #         entity_id: device_tracker.lina_phone
+  #         zone: zone.leave_staten_island
+  #   action:
+  #     - service: climate.set_away_mode
+  #       data:
+  #         entity_id: climate.upstairs
+  #         away_mode: 'off'
+  #     - service: notify.html5
+  #       data:
+  #         message: "Coming home, preparing house."
