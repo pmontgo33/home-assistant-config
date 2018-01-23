@@ -31,6 +31,11 @@
     entities:
       - sensor.multisensor_temperature
       - sensor.multisensor_relative_humidity
+      
+  laundry_room:
+    name: Laundry Room
+    entities:
+      - binary_sensor.laundry_leak_sensor
 
   outside_lights:
     name: Outside Lights
@@ -102,12 +107,26 @@
     control: hidden
     entities:
       - switch.main_water_valve_switch
-      - binary_sensor.laundry_leak_flood
-      - binary_sensor.laundry_leak_general
       - binary_sensor.laundry_leak_sensor
-      - binary_sensor.laundry_leak_sensor_2
-      - binary_sensor.laundry_leak_sensor_3
-  
+      - sensor.laundry_leak_alarm_level
+      - sensor.laundry_leak_alarm_type
+      - sensor.laundry_leak_flood
+      - sensor.laundry_leak_sourcenodeid
+      - zwave.laundry_leak
+      
+  leak_detectors:
+    name: Leak Detectors
+    entities: 
+      - binary_sensor.laundry_leak_sensor
+      
+  leak_alarm:
+    name: Leak Alarm
+    entities:
+      - input_boolean.leak_alarm
+      - group.leak_detectors
+      - switch.main_water_valve_switch
+      
+
   multisensor:
     name: Multisensor
     entities:
@@ -149,8 +168,8 @@
       - sensor.speedtest_download
       - sensor.speedtest_upload
       
-  smoke_detector:
-    name: Smoke Detector
+  smoke_alarm:
+    name: Smoke Alarm
     entities:
       - input_boolean.smoke_alarm
       - sensor.smoke_detector
@@ -180,7 +199,8 @@
       - device_tracker.sheree
       - device_tracker.mommy_tirro
       - group.modes
-      - group.smoke_detector
+      - group.smoke_alarm
+      - group.leak_alarm
   
   ### DOWNSTAIRS VIEW ###
   downstairs:
@@ -202,6 +222,7 @@
       - group.nursery
       - group.upstairs_climate
       - camera.bedroom_camera
+      - group.laundry_room
       - group.upstairs_media
       - sensor.upstairs_thermostat_humidity
 
@@ -225,7 +246,7 @@
     view: yes
     entities:
       - device_tracker.pat_phone
-      - device_tracker.linaphone_linaphone
+      - device_tracker.lina_phone
       - group.travel_times
   
   ### MEDIA VIEW ###
@@ -273,3 +294,4 @@
       - group.multisensor
       - group.water_devices
       - sensor.test_zone
+      - group.leak_detectors

@@ -47,6 +47,8 @@ conversation:
 # Enables support for tracking state changes over time
 history:
 
+influxdb:
+
 # View all events in a logbook
 logbook:
   exclude:
@@ -138,6 +140,10 @@ device_tracker:
 # Text to speech
 tts:
   - platform: google
+  
+media_player:
+  - platform: plex
+    entity_namespace: 'plex'
   
 ffmpeg:
 #   ffmpeg_bin: /usr/bin/ffmpeg

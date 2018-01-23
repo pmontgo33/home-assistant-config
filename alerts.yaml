@@ -4,8 +4,14 @@
 
   smoke_alarm:
     name: Smoke Alarm
-    done_message: Smoke Alarm Turned Off
     entity_id: input_boolean.smoke_alarm
+    repeat: 5
+    notifiers:
+      - html5
+  
+  leak_alarm:
+    name: Leak Alarm
+    entity_id: input_boolean.leak_alarm
     repeat: 5
     notifiers:
       - html5

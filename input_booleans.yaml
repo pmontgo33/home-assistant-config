@@ -13,3 +13,7 @@
   smoke_alarm:
     name: Smoke Alarm
     icon: mdi:alarm-light
+    
+  leak_alarm:
+    name: Leak Alarm
+    icon: mdi:alarm-light

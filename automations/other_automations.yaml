@@ -26,6 +26,7 @@
         data:
           topic: home/safety/smoke_detector
           payload_template: 'Last Alarm: {{ now().month }}/{{ now().day }}/{{ now().year}} @ {{ now().hour }}:{{ now().minute }}:{{ now().second }}'
+          retain: True
       - service: switch.turn_on
         data:
           entity_id: switch.front_main
