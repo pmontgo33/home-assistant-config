@@ -10,9 +10,17 @@
     action:
       - service: switch.turn_off
         entity_id: switch.main_water_valve_switch
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.leak_alarm
       - service: tts.google_say
         entity_id: media_player.living_room_speaker, media_player.kitchen_speaker, media_player.3rd_floor_speaker
         data:
           message: 'Leak detected! House water main shutoff. Leak detected! House water main shutoff.'
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.leak_alarm
+      - service: notify.html5
+        data_template:
+          message: "Leak in {{ trigger.from_state.attributes.friendly_name.split(' ')[0] }} at {{ now().month }}/{{ now().day }}/{{ now().year}} @ {{ now().hour }}:{{ now().minute }}:{{ now().second }}"
+          title: "LEAK DETECTED!"
+      - service: persistent_notification.create
+        data_template:
+          message: "Leak in {{ trigger.from_state.attributes.friendly_name.split(' ')[0] }} at {{ now().month }}/{{ now().day }}/{{ now().year}} @ {{ now().hour }}:{{ now().minute }}:{{ now().second }}"
+          title: "LEAK DETECTED!"

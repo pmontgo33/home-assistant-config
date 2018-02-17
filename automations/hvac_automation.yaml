@@ -2,6 +2,14 @@
 ## HVAC Automation
 #################################################################
 
+  - alias: Home Mode Change, Set Thermostats
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode
+    action:
+      - delay: 0:00:05
+      - service: python_script.set_thermostats
+      
   - alias: Humidifier ON for bed
     initial_state: True
     hide_entity: False
@@ -34,14 +42,6 @@
     action:
       service: switch.turn_off
       entity_id: switch.humidifier_switch
-      
-  - alias: Home Mode Change, Set Downstairs Setpoint
-    trigger:
-      - platform: state
-        entity_id: sensor.house_mode
-    action:
-      - delay: 0:00:05
-      - service: python_script.set_dstairs_temp_setpoint
   
   ### Automations for the Whole Home HVAC Mode Selecter ###
   - alias: Any HVAC mode Change, change Whole home selecter
@@ -67,11 +67,7 @@
     action:
       - service: climate.set_operation_mode
         data_template:
-          entity_id: climate.downstairs_heating_1
-          operation_mode: "{{ states('input_select.home_climate_mode') }}"
-      - service: climate.set_operation_mode
-        data_template:
-          entity_id: climate.upstairs
+          entity_id: climate.living_room, climate.dining_room, climate.upstairs, climate.master_bath, climate.hall_bath
           operation_mode: "{{ states('input_select.home_climate_mode')|lower }}"
           
           

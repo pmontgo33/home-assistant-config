@@ -13,5 +13,6 @@
     name: Leak Alarm
     entity_id: input_boolean.leak_alarm
     repeat: 5
+    skip_first: True
     notifiers:
       - html5

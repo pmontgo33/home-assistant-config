@@ -48,9 +48,8 @@
     name: Downstairs Climate
     control: hidden
     entities:
-      - climate.downstairs_heating_1
-      - climate.downstairs_cooling_1
-      - sensor.downstairs_relative_humidity
+      - climate.living_room
+      - climate.dining_room
       - group.downstairs_setpoints
 
   downstairs_setpoints:
@@ -69,8 +68,11 @@
     control: hidden
     entities:
       - climate.upstairs
+      - climate.master_bath
+      - climate.hall_bath
       - sensor.upstairs_thermostat_humidity
       - group.upstairs_climate_status
+      
   upstairs_climate_status:
     name: Status
     control: hidden
@@ -79,6 +81,16 @@
       - binary_sensor.upstairs_thermostat_online
       - sensor.upstairs_thermostat_hvac_state
       - binary_sensor.upstairs_thermostat_fan
+  
+  climate_overview:
+    name: Climate
+    control: hidden
+    entities:
+      - climate.living_room
+      - climate.dining_room
+      - climate.upstairs
+      - climate.master_bath
+      - climate.hall_bath
   
   irrigation:
     name: Irrigation
@@ -116,11 +128,14 @@
       
   leak_detectors:
     name: Leak Detectors
+    icon: mdi:water-pump
+    control: hidden
     entities: 
       - binary_sensor.laundry_leak_sensor
       
   leak_alarm:
     name: Leak Alarm
+    control: hidden
     entities:
       - input_boolean.leak_alarm
       - group.leak_detectors
@@ -181,6 +196,7 @@
       - media_player.living_room_speaker
       - media_player.kitchen_speaker
       - media_player.living_room_tv
+  
   upstairs_media:
     name: Upstairs Media
     entities:
@@ -188,6 +204,8 @@
       - media_player.nursery_speaker
       - media_player.3rd_floor_speaker
       - media_player.bedroom_tv
+
+###########################################################################################
       
   ### HOME VIEW ###
   default_view:
@@ -199,6 +217,7 @@
       - device_tracker.sheree
       - device_tracker.mommy_tirro
       - group.modes
+      - group.climate_overview
       - group.smoke_alarm
       - group.leak_alarm
   
@@ -295,3 +314,4 @@
       - group.water_devices
       - sensor.test_zone
       - group.leak_detectors
+  

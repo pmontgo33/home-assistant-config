@@ -4,7 +4,7 @@
 
 #  - platform: yr
   # - platform: pi_hole
-  - platform: plex
+#  - platform: plex
   - platform: systemmonitor
     resources:
       - type: disk_use_percent
@@ -39,7 +39,7 @@
       upstairs_op_mode:
         value_template: '{{ states.climate.upstairs.attributes.operation_mode|title }}'
       downstairs_op_mode:
-        value_template: '{{ states.climate.downstairs_heating_1.attributes.operation_mode|title }}'
+        value_template: '{{ states.climate.living_room.attributes.operation_mode|title }}'
       
       test_zone:
         value_template: '{{ states.group.all_devices.state }}'

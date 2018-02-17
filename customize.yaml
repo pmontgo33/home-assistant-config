@@ -14,7 +14,7 @@ switch.deck_light_switch:
   friendly_name: Deck Light
   icon: mdi:lightbulb
 fan.bedroom_fan_level:
-  friendly_name: Fan
+  friendly_name: Ceiling Fan
   icon: mdi:fan
 switch.driveway_switch:
   friendly_name: Driveway
@@ -71,3 +71,16 @@ binary_sensor.laundry_leak_sensor:
 switch.main_water_valve_switch:
   icon: mdi:asterisk
   friendly_name: Main Water Valve
+sensor.multisensor_temperature:
+  friendly_name: Temperature
+sensor.multisensor_relative_humidity:
+  friendly_name: Relative Humidity
+  icon: mdi:water-percent
+climate.master_bath:
+  friendly_name: Master Bathroom Radiant
+  icon: mdi:fire
+climate.hall_bath:
+  friendly_name: Hall Bathroom Radiant
+  icon: mdi:fire
+climate.dining_room:
+  icon: mdi:fire
