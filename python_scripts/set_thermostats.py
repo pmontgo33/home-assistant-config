@@ -20,19 +20,19 @@ operation_mode = hass.states.get('climate.living_room').attributes['operation_mo
 logger.warning("Current Operation Mode: {}".format(operation_mode))
 
 if house_mode == 'Away':
-  dstairs_heat_setpoint = 66
+  dstairs_heat_setpoint = 68
   upstairs_radiant_heat_setpoint = 61
   
   dstairs_cool_setpoint = 84
   
 elif house_mode == 'Sleep':
-  dstairs_heat_setpoint = 66
+  dstairs_heat_setpoint = 68
   upstairs_radiant_heat_setpoint = 61
   
   dstairs_cool_setpoint = 84
   
 elif house_mode == 'Home':
-  dstairs_heat_setpoint = 68
+  dstairs_heat_setpoint = 70
   upstairs_radiant_heat_setpoint = 69
   
   dstairs_cool_setpoint = 79
