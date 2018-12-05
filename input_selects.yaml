@@ -8,4 +8,4 @@
       - "Off"
       - "Cool"
       - "Heat"
-      - "Separate"
+    icon: mdi:thermostat

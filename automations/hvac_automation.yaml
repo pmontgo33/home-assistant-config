@@ -9,7 +9,42 @@
     action:
       - delay: 0:00:05
       - service: python_script.set_thermostats
-      
+
+  - alias: Humidifier OFF for bed
+    initial_state: True
+    hide_entity: False
+    trigger:
+      platform: time
+      at: '04:00:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.humidifier_switch
+  
+  ### Automations for the Whole Home HVAC Mode Selecter ###
+  - alias: Any HVAC mode Change, change Whole home selecter
+    trigger:
+      - platform: state
+        entity_id: sensor.downstairs_op_mode
+    condition:
+      condition: template
+      value_template: " {{ states('sensor.downstairs_op_mode') != 'eco' }} "
+    action:
+      - service: input_select.select_option
+        data_template: 
+          entity_id: input_select.home_climate_mode
+          option: "{{ states('sensor.downstairs_op_mode')|title }}"
+
+  - alias: Change whole home selecter, change all HVAC modes
+    trigger:
+      - platform: state
+        entity_id: input_select.home_climate_mode
+    action:
+      - service: climate.set_operation_mode
+        data_template:
+          entity_id: group.downstairs_climate, climate.upstairs, climate.master_bath, climate.hall_bath
+          operation_mode: "{{ states('input_select.home_climate_mode')|lower }}"
+      - delay: 0:00:05
+          
   - alias: Humidifier ON for bed
     initial_state: True
     hide_entity: False
@@ -32,59 +67,3 @@
     action:
       service: switch.turn_on
       entity_id: switch.humidifier_switch
-
-  - alias: Humidifier OFF for bed
-    initial_state: True
-    hide_entity: False
-    trigger:
-      platform: time
-      at: '04:00:00'
-    action:
-      service: switch.turn_off
-      entity_id: switch.humidifier_switch
-  
-  ### Automations for the Whole Home HVAC Mode Selecter ###
-  - alias: Any HVAC mode Change, change Whole home selecter
-    trigger:
-      - platform: state
-        entity_id: sensor.upstairs_op_mode, sensor.downstairs_op_mode
-    action:
-      - delay: '00:00:03'
-      - service: input_select.select_option
-        data_template: 
-          entity_id: input_select.home_climate_mode
-          option: >
-            {% if states('sensor.upstairs_op_mode') == states('sensor.downstairs_op_mode') %}
-              {{ states('sensor.upstairs_op_mode') }}
-            {% else %}
-              Separate
-            {% endif %}
-
-  - alias: Change whole home selecter, change all HVAC modes
-    trigger:
-      - platform: state
-        entity_id: input_select.home_climate_mode
-    action:
-      - service: climate.set_operation_mode
-        data_template:
-          entity_id: climate.living_room, climate.dining_room, climate.upstairs, climate.master_bath, climate.hall_bath
-          operation_mode: "{{ states('input_select.home_climate_mode')|lower }}"
-          
-          
-  # - alias: Away/Sleep Change
-  #   trigger:
-  #     - platform: state
-  #       entity_id: input_boolean.sleep_mode
-  #     - platform: state
-  #       entity_id: input_boolean.away_mode
-  #   action:
-  #     - delay: 0:00:05
-  #     - service: climate.set_temperature
-  #       entity_id: climate.downstairs_heating_1, climate.downstairs_cooling_1
-  #       data_template:
-  #         temperature: >
-  #           {% if is_state('sensor.away_mode', 'Away') %}
-  #             {{ float(states.sensor.dstairs_away_set_point.state) }}
-  #           {% else %}
-  #             {{ float(states.sensor.dstairs_home_set_point.state) }}
-  #           {% endif %}

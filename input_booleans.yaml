@@ -10,6 +10,10 @@
     name: Away
     icon: mdi:home-outline
     
+  show_modes:
+    name: Show Mode Options
+    icon: mdi:settings
+    
   smoke_alarm:
     name: Smoke Alarm
     icon: mdi:alarm-light
@@ -17,3 +21,7 @@
   leak_alarm:
     name: Leak Alarm
     icon: mdi:alarm-light
+    
+  christmas_season:
+    name: Christmas Season
+    icon: mdi:snowman

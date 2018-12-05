@@ -9,9 +9,22 @@
       - platform: event
         event_type: homeassistant_start
     condition:
-      condition: time
-      after: '22:30:00'
-      before: '4:15:00'
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.sleep_mode
+          state: 'off'
+        - condition: time
+          after: '22:30:00'
+          before: '4:15:00'
+    action:
+      service: input_boolean.turn_on
+      entity_id: input_boolean.sleep_mode
+      
+  - alias: Sleep Mode ON When in Bed (webhook)
+    trigger:
+      platform: webhook
+      webhook_id: !secret webhook_sleep_mode_on
     action:
       service: input_boolean.turn_on
       entity_id: input_boolean.sleep_mode
@@ -19,7 +32,19 @@
   - alias: Sleep Mode OFF
     trigger:
       platform: time
-      at: '7:00:00'
+      at: '6:00:00'
+    condition:
+      condition: state
+      entity_id: input_boolean.sleep_mode
+      state: 'on'
+    action:
+      service: input_boolean.turn_off
+      entity_id: input_boolean.sleep_mode
+      
+  - alias: Sleep Mode OFF based on alarm (Webhook)
+    trigger:
+      platform: webhook
+      webhook_id: !secret webhook_sleep_mode_off
     action:
       service: input_boolean.turn_off
       entity_id: input_boolean.sleep_mode

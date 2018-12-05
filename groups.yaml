@@ -16,19 +16,26 @@
   downstairs_lights:
     name: Downstairs Lights
     entities:
+      - light.main_kitchen
+      - light.rear_kitchen
+      - light.kitchen_chandelier
+      - light.cabinets
       - switch.christmas_tree_switch
+      - switch.foyer_closet_light
   
   master_bedroom:
     name: Master Bedroom
     entities:
       - switch.bedroom_light_switch
       - light.master_bathroom_light_level
+      - light.bedside
       - fan.bedroom_fan_level
       - switch.humidifier_switch
 
-  nursery:
-    name: Nursery
+  3rd Floor:
+    name: 3rd Floor
     entities:
+      - switch.vegetable_light_switch
       - sensor.multisensor_temperature
       - sensor.multisensor_relative_humidity
       
@@ -40,28 +47,31 @@
   outside_lights:
     name: Outside Lights
     entities:
-      - switch.front_lights_switch
+      - light.front_lights
       - switch.deck_light_switch
       - switch.driveway_switch
+      
+  inside_lights:
+    name: Inside Lights
+    entities:
+      - light.main_kitchen
+      - light.rear_kitchen
+      - light.kitchen_chandelier
+      - light.cabinets
+      - switch.foyer_closet_light
+      - switch.bedroom_light_switch
+      - light.master_bathroom_light_level
+      - light.bedside
   
   downstairs_climate:
     name: Downstairs Climate
     control: hidden
     entities:
-      - climate.living_room
+      - climate.downstairs
       - climate.dining_room
-      - group.downstairs_setpoints
-
-  downstairs_setpoints:
-    name: Downstairs Setpoint Temps
-    icon: mdi:settings
-    entities:
-      - input_number.dstairs_home_heat_temp
-      - input_number.dstairs_away_heat_temp
-      - input_number.dstairs_sleep_heat_temp
-      - input_number.dstairs_home_cool_temp
-      - input_number.dstairs_away_cool_temp
-      - input_number.dstairs_sleep_cool_temp
+      - climate.kitchen_main
+      - climate.kitchen_rear
+      - climate.foyer
   
   upstairs_climate:
     name: Upstairs Climate
@@ -86,8 +96,11 @@
     name: Climate
     control: hidden
     entities:
-      - climate.living_room
+      - climate.downstairs
       - climate.dining_room
+      - climate.kitchen_main
+      - climate.kitchen_rear
+      - climate.foyer
       - climate.upstairs
       - climate.master_bath
       - climate.hall_bath
@@ -96,8 +109,10 @@
     name: Irrigation
     control: hidden
     entities:
+      - binary_sensor.rachio_online
       - group.front_irrigation
       - group.back_irrigation
+      - switch.rachio_in_standby_mode
   front_irrigation:
     name: Front Zones
     control: hidden
@@ -106,7 +121,7 @@
       - switch.front_strip
       - switch.front_main
   back_irrigation:
-    name: Front Zones
+    name: Back Zones
     control: hidden
     icon: mdi:water-pump
     entities:
@@ -128,7 +143,7 @@
       
   leak_detectors:
     name: Leak Detectors
-    icon: mdi:water-pump
+    icon: mdi:pipe-leak
     control: hidden
     entities: 
       - binary_sensor.laundry_leak_sensor
@@ -154,14 +169,6 @@
       - sensor.multisensor_sourcenodeid
       - sensor.multisensor_temperature
       - sensor.multisensor_ultraviolet
-      
-  travel_times:
-    name: Travel Times
-    entities:
-      - sensor.pat_to_home
-      - sensor.lina_to_home
-      - sensor.home_to_staten_island
-      - sensor.home_to_city
   
   weather:
     name: Weather
@@ -212,7 +219,8 @@
     view: yes
     icon: mdi:home-assistant
     entities:
-      - device_tracker.pat_phone
+      - updater.updater
+      - device_tracker.patrick_phone
       - device_tracker.lina_phone
       - device_tracker.sheree
       - device_tracker.mommy_tirro
@@ -238,9 +246,10 @@
     view: yes
     entities:
       - group.master_bedroom
-      - group.nursery
+      - group.3rd_floor
       - group.upstairs_climate
       - camera.bedroom_camera
+      - camera.nursery_camera
       - group.laundry_room
       - group.upstairs_media
       - sensor.upstairs_thermostat_humidity
@@ -257,16 +266,15 @@
       - sensor.pws_temp_f
       - group.outside_lights
       - group.irrigation
-    
-  ### DEVICES VIEW ###
-  locations:
-    name: Locations
-    icon: mdi:account-location
+
+  ### CAMERAS VIEW ###
+  cameras:
+    name: Cameras
+    icon: mdi:camcorder
     view: yes
     entities:
-      - device_tracker.pat_phone
-      - device_tracker.lina_phone
-      - group.travel_times
+      - camera.nursery_camera
+      - camera.bedroom_camera
   
   ### MEDIA VIEW ###
   media_view:
@@ -307,11 +315,19 @@
       - sensor.pi_hole
       - sensor.plex
       - sensor.disk_use_percent
-      - sensor.ram_used
-      - sensor.cpu_used
+      - sensor.memory_use_percent
+      - sensor.processor_use
       - sensor.since_last_boot
       - group.multisensor
       - group.water_devices
       - sensor.test_zone
       - group.leak_detectors
+      - sensor.nursery_camera_motion_detected
+      - light.bedside
+      - light.cabinets
+      - light.front_lights
+      - light.front_porch
+      - light.front_post
+      - switch.foyer_closet_light
+      - sensor.climate_operation_mode
   

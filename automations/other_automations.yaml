@@ -2,20 +2,6 @@
 ## Other Automations
 #################################################################
 
-  - alias: Christmas Tree ON at 4pm
-    trigger:
-      - platform: time
-        at: '16:00:00'
-      - platform: event
-        event_type: homeassistant_start
-    condition:
-      condition: time
-      after: '16:00:00'
-      before: '4:15:00'
-    action:
-      service: switch.turn_on
-      entity_id: switch.christmas_tree_switch
-      
   - alias: Smoke Alarm ON
     trigger:
       - platform: state
@@ -34,3 +20,50 @@
       - service: switch.turn_on
         data:
           entity_id: switch.back_walkway
+          
+  - alias: Bedroom Light Toggle Webhook
+    trigger:
+      platform: webhook
+      webhook_id: !secret webhook_bedroom_light_toggle
+    action:
+      service: switch.toggle
+      entity_id: switch.bedroom_light_switch
+  
+  - alias: Inside Lights off when Away
+    trigger:
+      platform: state
+      entity_id: input_select.house_mode
+      to: 'Away'
+    action:
+      service: homeassistant.turn_off
+      entity_id: group.inside_lights
+  
+  - alias: Christmas Tree ON at 4pm
+    trigger:
+      - platform: time
+        at: '16:00:00'
+      - platform: event
+        event_type: homeassistant_start
+    condition:
+      condition: time
+      after: '16:00:00'
+      before: '4:15:00'
+    action:
+      service: switch.turn_on
+      entity_id: switch.christmas_tree_switch
+  
+  - alias: Vegetable Light ON at 5am
+    trigger:
+      - platform: time
+        at: '05:00:00'
+    action:
+      service: switch.turn_on
+      entity_id: switch.vegetable_light_switch
+      
+  - alias: Vegetable Light OFF at 8:30pm
+    trigger:
+      - platform: time
+        at: '20:30:00'
+    action:
+      service: switch.turn_off
+      entity_id: switch.vegetable_light_switch

@@ -1,23 +1,19 @@
-- action:
-  - alias: Outside Lights Group OFF
-    data:
-      entity_id: group.outside_lights
-    service: homeassistant.turn_off
-  - alias: Deck Light Off
-    data:
-      entity_id: group.outside_lights
-    service: switch.turn_off
+- id: '1505425124621'
   alias: Outside Lights OFF at sunrise
-  condition: []
-  id: '1505425124621'
   trigger:
   - event: sunrise
     platform: sun
+  condition: []
+  action:
+  - alias: Deck Light Off
+    data:
+      entity_id: group.outside_lights
+    service: homeassistant.turn_off
 - action:
   - alias: Front Lights ON
     data:
-      entity_id: switch.front_lights_switch
-    service: switch.turn_on
+      entity_id: light.front_lights
+    service: light.turn_on
   alias: Front Lights ON at sunset
   condition: []
   id: '1505425124887'

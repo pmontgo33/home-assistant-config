@@ -3,10 +3,10 @@ switch.humidifier_switch:
   icon: mdi:water
 switch.bedroom_light_switch:
   friendly_name: Bedroom Light
-  icon: mdi:lightbulb
+  icon: mdi:ceiling-light
 light.master_bathroom_light_level:
   friendly_name: Bathroom Light
-  icon: mdi:lightbulb
+  icon: mdi:ceiling-light
 switch.front_lights_switch:
   friendly_name: Front Lights
   icon: mdi:lightbulb
@@ -60,13 +60,11 @@ group.all_scripts:
 sensor.smoke_detector:
   friendly_name: Smoke Detector
   icon: mdi:fire
-input_select.home_climate_mode:
-  icon: mdi:nest-thermostat
-switch.christmas_tree_switch:
-  icon: mdi:pine-tree
-  friendly_name: Christmas Tree
+switch.vegetable_light_switch:
+  friendly_name: Vegetable Lights
+  icon: mdi:leaf
 binary_sensor.laundry_leak_sensor:
-  icon: mdi:water-pump
+  device_class: moisture
   friendly_name: Laundry Room Leak Sensor
 switch.main_water_valve_switch:
   icon: mdi:asterisk
@@ -84,3 +82,19 @@ climate.hall_bath:
   icon: mdi:fire
 climate.dining_room:
   icon: mdi:fire
+light.bedside:
+  icon: mdi:lamp
+switch.foyer_closet_light:
+  icon: mdi:lightbulb
+media_player.bedroom_tv:
+  icon: mdi:television-classic
+climate.foyer:
+  icon: mdi:fire
+climate.kitchen_main:
+  icon: mdi:fire
+climate.kitchen_rear:
+  icon: mdi:fire
+cover.main_water_valve:
+  device_class: damper
+light.christmas_tree:
+  icon: mdi:pine-tree

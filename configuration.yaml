@@ -21,12 +21,20 @@ frontend:
 # Enables configuration UI
 config:
 cloud:
+  google_actions:
+    filter:
+      exclude_domains:
+        - script
+        - media_player
+    entity_config:
+      switch.driveway_switch:
+        name: Driveway Light
 
 http:
   api_password: !secret api_password
   base_url: !secret base_url
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
+  #ssl_certificate: /ssl/fullchain.pem
+  #ssl_key: /ssl/privkey.pem
 
 google_domains:
   domain: !secret google_domains_domain
@@ -45,18 +53,17 @@ discovery:
 conversation:
 
 recorder:
-    purge_interval: 0
 
 # Enables support for tracking state changes over time
 history:
-
-influxdb:
 
 # View all events in a logbook
 logbook:
   exclude:
     domains:
       - group
+      - light
+    entities:
       - sensor.pws_alerts
       - sensor.pws_temp_f
       - sensor.pws_feelslike_f
@@ -67,6 +74,7 @@ logbook:
       - sensor.pws_precip_1d_in
       - sensor.pws_precip_1d
       - sensor.since_last_boot
+      - binary_sensor.upstairs_thermostat_fan
 
 map:
 sun:
@@ -79,36 +87,30 @@ notify:
     gcm_api_key: !secret html5_server_key
     gcm_sender_id: !secret html5_sender_id
 
-### MQTT BROKER ###
-mqtt:
-  broker: core-mosquitto
-  username: !secret mosq_username
-  password: !secret mosq_password
-
 ### Z-WAVE CONFIG ###
 zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
-  polling_interval: 30000
-  device_config:
-    switch.deck_light:
-      polling_intensity: 1
-    light.master_bathroom_light_level:
-      polling_intensity: 1
+#  polling_interval: 30000
+  # device_config:
+  #   light.master_bathroom_light_level:
+  #     polling_intensity: 1
+  #     refresh_value: 2
+  #     delay: 3
 
-### GOOGLE ASSISTANT ###
-google_assistant:
-  project_id: !secret google-assistant_project_id
-  client_id: !secret google-assistant_client_id
-  access_token: !secret google-assistant_access_token
-  api_key: !secret google-assistant_api_key
-  exposed_domains:
-    - switch
-    - light
-    - fan
-    - climate
-    - input_boolean
-    - input_select
+### MANUAL GOOGLE ASSISTANT ###
+# google_assistant:
+#   project_id: !secret google-assistant_project_id
+#   client_id: !secret google-assistant_client_id
+#   access_token: !secret google-assistant_access_token
+#   api_key: !secret google-assistant_api_key
+#   exposed_domains:
+#     - switch
+#     - light
+#     - fan
+#     - climate
+#     - input_boolean
+#     - input_select
   
 ### Nest Config ###
 nest:
@@ -146,7 +148,6 @@ device_tracker:
     password: !secret tplink_password
     consider_home: 180
     track_new_devices: false
-  - platform: owntracks_http
 
 # Text to speech
 tts:
@@ -158,39 +159,54 @@ media_player:
   
 ffmpeg:
 #   ffmpeg_bin: /usr/bin/ffmpeg
+amcrest:
+  - host: !secret amcrest_nursery_ip
+    username: !secret amcrest_nursery_username
+    password: !secret amcrest_nursery_password
+    resolution: high
+    stream_source: mjpeg
+    name: "Nursery Camera"
+    sensors:
+      - motion_detector
+
 camera:
   - platform: ffmpeg
     name: Bedroom Camera
     input: /dev/video0
-### MOTION CAMERA ###
-# camera:
-#   - platform: local_file
-#     name: Bedroom Camera
-#     file_path: /share/motion/lastsnap.jpg
+  # - platform: ffmpeg
+  #   input: !secret nursery_input
+  #   name: Nursery Camera
+  - platform: amcrest
+
+### HUE ###
+hue:
+  bridges:
+    - host: !secret hue_ip_address
+      allow_hue_groups: false
 
 ### Rachio ###
+rachio:
+  api_key: !secret rachio_token
 switch:
   - platform: rachio
-    access_token: !secret rachio_token
+binary_sensor:
+  - platform: rachio
 
 panel_iframe:
   ide:
     title: IDE
     icon: mdi:language-python
-    url: http://hassio.local:8321
+    url: !secret ide_url
   terminal:
     title: Terminal
     icon: mdi:console
-    url: http://hassio.local:7681
-  grafana:
-    title: Grafana
-    icon: mdi:chart-areaspline
-    url: http://hassio.local:3000
+    url: !secret terminal_url
   rachio:
     title: Rachio
     url: "https://app.rach.io"
     icon: mdi:water-pump
-
+    
+    
 sensor: !include sensors.yaml
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -199,5 +215,6 @@ script: !include scripts.yaml
 zone: !include zones.yaml
 input_boolean: !include input_booleans.yaml
 input_select: !include input_selects.yaml
-input_number: !include input_numbers.yaml
+#input_number: !include input_numbers.yaml
 alert: !include alerts.yaml
+light: !include lights.yaml

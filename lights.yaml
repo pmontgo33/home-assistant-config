@@ -1,0 +1,23 @@
+#################################################################
+## Lights
+#################################################################
+
+  - platform: template
+    lights:
+      christmas_tree:
+        friendly_name: "Christmas Tree"
+        value_template: "{{ is_state('switch.christmas_vegetable', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.christmas_vegetable
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.christmas_vegetable
+            
+  - platform: group
+    name: Front Lights
+    entities:
+      - light.front_porch
+      - light.front_post
