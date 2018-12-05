@@ -59,6 +59,7 @@
       - light.kitchen_chandelier
       - light.cabinets
       - switch.foyer_closet_light
+      - light.christmas_tree
       - switch.bedroom_light_switch
       - light.master_bathroom_light_level
       - light.bedside

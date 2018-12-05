@@ -28,11 +28,19 @@
     action:
       service: switch.toggle
       entity_id: switch.bedroom_light_switch
+      
+  - alias: Smoke Alarm ON when Receive Roost Webhook from IFTTT
+    trigger:
+      platform: webhook
+      webhook_id: !secret webhook_smoke_alarm
+    action:
+      service: input_boolean.turn_on
+      entity_id: input_boolean.smoke_alarm    
   
   - alias: Inside Lights off when Away
     trigger:
       platform: state
-      entity_id: input_select.house_mode
+      entity_id: sensor.house_mode
       to: 'Away'
     action:
       service: homeassistant.turn_off

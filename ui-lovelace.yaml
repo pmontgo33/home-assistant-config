@@ -3,10 +3,14 @@
 # https://github.com/dale3h/python-lovelace
 
 title: Home
+resources:
+  - url: /local/state-attribute-element.js?v=0
+    type: js
 views:
   - title: default_view
     icon: mdi:home-assistant
     badges:
+      - updater.updater
       - device_tracker.patrick_phone
       - device_tracker.lina_phone
     cards:
@@ -42,6 +46,7 @@ views:
                 - input_boolean.sleep_mode
       
       - type: conditional
+        id: christmas_tree
         conditions:
           - entity: input_boolean.christmas_season
             state: "on"
@@ -201,14 +206,21 @@ views:
           - light.front_lights
           - switch.deck_light_switch
           - switch.driveway_switch
-      - type: entities
-        title: Irrigation
-        show_header_toggle: false
-        entities:
-          - binary_sensor.rachio_online
-          - switch.rachio_in_standby_mode
-          - group.front_irrigation
-          - group.back_irrigation
+      - type: vertical-stack
+        cards:
+        - type: entities
+          title: Irrigation
+          show_header_toggle: false
+          entities:
+            - binary_sensor.rachio_online
+            # - switch.rachio_in_standby_mode
+            # - group.front_irrigation
+            # - group.back_irrigation
+        - type: iframe
+          url: https://app.rach.io
+          aspect_ratio: 125%
+
+### CAMERAS VIEW ###
   - title: Cameras
     icon: mdi:camcorder
     cards:
@@ -222,6 +234,99 @@ views:
         entity: camera.nursery_camera
         camera_image: camera.nursery_camera
         show_info: true
+
+### 1ST FLOORPLAN ###
+  - icon: mdi:numeric-1-box
+    title: 1st Floorplan
+    id: floorplan1
+    panel: true
+    cards:
+      - type: picture-elements
+        image: /local/FirstFloorPlan.png
+        elements:
+          - type: custom:state-attribute-element
+            entity: climate.downstairs
+            attribute: current_temperature
+            style:
+              top: 80%
+              left: 47%
+          - type: state-icon
+            tap_action: toggle
+            entity: light.front_porch
+            style:
+              top: 30%
+              left: 80%
+          - type: state-label
+            entity: sensor.upstairs_climate_status
+            style:
+              top: 82%
+              left: 79%
+          - type: service-button
+            title: Turn lights off
+            style:
+              top: 95%
+              left: 80%
+            service: light.turn_off
+            service_data:
+                entity_id: group.downstairs_lights
+
+### 2ND FLOORPLAN ###                
+  - icon: mdi:numeric-2-box
+    title: 2nd Floorplan
+    id: floorplan2
+    panel: true
+    cards:
+      - type: picture-elements
+        image: /local/SecondFloorPlan.png
+        elements:
+          - type: custom:state-attribute-element
+            entity: climate.upstairs
+            attribute: current_temperature
+            suffix: °
+            style:
+              top: 50%
+              left: 60%
+          - type: state-icon
+            tap_action: toggle
+            entity: switch.bedroom_light_switch
+            style:
+              top: 35%
+              left: 34%
+          - type: state-icon
+            tap_action: toggle
+            entity: fan.bedroom_fan_level
+            style:
+              top: 30%
+              left: 34%
+          - type: state-icon
+            tap_action: toggle
+            entity: light.master_bathroom_light_level
+            style:
+              top: 28%
+              left: 54%
+          - type: state-icon
+            entity: climate.master_bath
+            style:
+              top: 28%
+              left: 59%
+          - type: state-icon
+            entity: climate.hall_bath
+            style:
+              top: 14%
+              left: 71%
+          - type: state-icon
+            tap_action: toggle
+            entity: light.bedside
+            style:
+              top: 22%
+              left: 24%
+          - type: state-icon
+            entity: media_player.bedroom_tv
+            style:
+              top: 21%
+              left: 42%
+
+### MEDIA VIEW ###
   - title: Media
     icon: mdi:cast
     cards:
@@ -305,19 +410,6 @@ views:
           - sensor.nursery_camera_motion_detected
           - light.front_lights
           - switch.foyer_closet_light
-    #   - type: entities
-    #     title: Multisensor
-    #     show_header_toggle: true
-    #     entities:
-    #       - binary_sensor.multisensor_sensor
-    #       - sensor.multisensor_alarm_level
-    #       - sensor.multisensor_alarm_type
-    #       - sensor.multisensor_burglar
-    #       - sensor.multisensor_luminance
-    #       - sensor.multisensor_relative_humidity
-    #       - sensor.multisensor_sourcenodeid
-    #       - sensor.multisensor_temperature
-    #       - sensor.multisensor_ultraviolet
       - type: entities
         title: Water Devices
         show_header_toggle: false

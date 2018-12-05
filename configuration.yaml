@@ -135,10 +135,6 @@ climate:
 
 ### iOS ###
 ios:
-      
-### IFTTT Config ###
-ifttt:
-  key: !secret ifttt_key
     
 ### Device Tracking ###
 device_tracker:

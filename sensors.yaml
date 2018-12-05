@@ -34,12 +34,11 @@
             mdi:home-account
           {% endif %}  
           
-
       
       upstairs_op_mode:
-        value_template: '{{ states.climate.upstairs.attributes.operation_mode|title }}'
+        value_template: '{{ states.climate.upstairs.attributes.operation_mode }}'
       downstairs_op_mode:
-        value_template: '{{ states.climate.downstairs.attributes.operation_mode|title }}'
+        value_template: '{{ states.climate.downstairs.attributes.operation_mode }}'
       
       # test_zone:
       #   value_template: '{{ states.group.all_devices.state }}'
