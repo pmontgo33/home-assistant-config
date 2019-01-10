@@ -10,7 +10,7 @@
       - type: disk_use_percent
       - type: memory_use_percent
       - type: processor_use
-      - type: since_last_boot
+    #   - type: since_last_boot
  
   - platform: template
     sensors:
@@ -19,26 +19,59 @@
         friendly_name: House Mode
         value_template: >
           {% if is_state('input_boolean.away_mode', 'on') %}
-            Away
+            {% if is_state('input_boolean.coming_home', 'on') %}
+              {% if is_state('input_boolean.sleep_mode', 'on') %}
+                Sleep
+              {% else %}
+                Coming Home
+              {% endif %}
+            {% else %}  
+              Away
+            {% endif %}
           {% elif is_state('input_boolean.sleep_mode', 'on') %}
-            Sleep
+            {% if is_state('input_boolean.waking_up', 'on') %}
+                Waking Up
+              {% else %}
+                Sleep
+            {% endif %}
           {% else %}
             Home
           {% endif %}  
         icon_template: >
           {% if is_state('input_boolean.away_mode', 'on') %}
-            mdi:home-outline
+            {% if is_state('input_boolean.coming_home', 'on') %}
+              {% if is_state('input_boolean.sleep_mode', 'on') %}
+                mdi:sleep
+              {% else %}
+                mdi:car-connected
+              {% endif %}
+            {% else %}  
+              mdi:home-outline
+            {% endif %}
           {% elif is_state('input_boolean.sleep_mode', 'on') %}
-            mdi:sleep
+            {% if is_state('input_boolean.waking_up', 'on') %}
+                mdi:sleep-off
+              {% else %}
+                mdi:sleep
+            {% endif %}
           {% else %}
             mdi:home-account
-          {% endif %}  
+          {% endif %}
           
       
       upstairs_op_mode:
         value_template: '{{ states.climate.upstairs.attributes.operation_mode }}'
       downstairs_op_mode:
         value_template: '{{ states.climate.downstairs.attributes.operation_mode }}'
+      outside_temperature:
+        value_template: '{{ states.weather.dark_sky.attributes.temperature }}'
+        unit_of_measurement: '°F'
+        device_class: temperature
+      outside_humidity:
+        value_template: '{{ states.weather.dark_sky.attributes.humidity }}'
+        unit_of_measurement: '%'
+        device_class: humidity
+      
       
       # test_zone:
       #   value_template: '{{ states.group.all_devices.state }}'
@@ -49,22 +82,17 @@
     name: "Smoke Detector"
     state_topic: "home/safety/smoke_detector"
   
-  ### WEATHER UNDERGROUND ###
-  - platform: wunderground
-    api_key: !secret wunderground_api_key
-    monitored_conditions:
-      - alerts
-      - temp_f
-      - feelslike_f
-      - relative_humidity
-      - precip_today_in
-      - weather
-      - wind_mph
-      - precip_1d_in
-      - precip_1d
-
   - platform: speedtest
     monitored_conditions:
       - ping
       - download
       - upload
+
+  - platform: history_stats
+    name: Living Room Heating
+    entity_id: sensor.downstairs_thermostat_hvac_state
+    state: 'heating'
+    type: time
+    end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    duration:
+      hours: 24

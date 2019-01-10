@@ -9,7 +9,15 @@
   away_mode:
     name: Away
     icon: mdi:home-outline
-    
+  
+  coming_home:
+    name: Coming Home
+    icon: mdi:car-connected
+
+  waking_up:
+    name: Waking Up
+    icon: mdi:sleep-off
+
   show_modes:
     name: Show Mode Options
     icon: mdi:settings

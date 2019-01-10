@@ -1,19 +1,3 @@
-"""
-if cooling:
-  if away:
-    get cooling away temp
-  if sleep:
-    get cooling sleep temp
-  else:
-    get cooling home temp
-if heating:
-  if away:
-    get heating away temp
-    ...
-  
-"""
-
-
 house_mode = hass.states.get('sensor.house_mode').state
 logger.warning("Current House Mode is: {}".format(house_mode))
 operation_mode = hass.states.get('input_select.home_climate_mode').state
@@ -33,7 +17,7 @@ elif house_mode == 'Sleep':
   
   dstairs_cool_setpoint = 84
   
-elif house_mode == 'Home':
+elif (house_mode == 'Home') or (house_mode == 'Coming Home') or (house_mode == 'Waking Up'):
   # hass.services.call('climate', 'set_away_mode', {'entity_id': 'climate.downstairs', 'away_mode': 'off'})
   
   dstairs_heat_setpoint = 70
@@ -50,7 +34,3 @@ if operation_mode == 'Heat':
   hass.services.call('climate', 'set_temperature', {'entity_id': 'climate.master_bath', 'temperature': upstairs_radiant_heat_setpoint})
   hass.services.call('climate', 'set_temperature', {'entity_id': 'climate.hall_bath', 'temperature': upstairs_radiant_heat_setpoint})
   logger.warning("Upstairs Radiant Heat Setpoint: {}".format(upstairs_radiant_heat_setpoint))
-  
-# elif operation_mode == 'cool':
-#   hass.services.call('climate', 'set_temperature', {'entity_id': 'climate.living_room', 'temperature': dstairs_cool_setpoint})
-#   logger.warning("Downstairs Cool Setpoint: {}".format(dstairs_cool_setpoint))

@@ -14,10 +14,12 @@ homeassistant:
   customize: !include customize.yaml
 
 logger:
+  default: info
 
 # Enables the frontend
 frontend:
-
+lovelace:
+  mode: yaml
 # Enables configuration UI
 config:
 cloud:
@@ -33,8 +35,6 @@ cloud:
 http:
   api_password: !secret api_password
   base_url: !secret base_url
-  #ssl_certificate: /ssl/fullchain.pem
-  #ssl_key: /ssl/privkey.pem
 
 google_domains:
   domain: !secret google_domains_domain
@@ -150,6 +150,7 @@ tts:
   - platform: google
   
 media_player:
+  - platform: cast
   - platform: plex
     entity_namespace: 'plex'
   
@@ -174,20 +175,19 @@ camera:
   #   name: Nursery Camera
   - platform: amcrest
 
-### HUE ###
-hue:
-  bridges:
-    - host: !secret hue_ip_address
-      allow_hue_groups: false
+# ### HUE ###
+# hue:
+#   bridges:
+#     - host: !secret hue_ip_address
+#       allow_hue_groups: false
 
 ### Rachio ###
 rachio:
   api_key: !secret rachio_token
 switch:
   - platform: rachio
-binary_sensor:
-  - platform: rachio
 
+### PANEL TABS ###
 panel_iframe:
   ide:
     title: IDE
@@ -197,11 +197,24 @@ panel_iframe:
     title: Terminal
     icon: mdi:console
     url: !secret terminal_url
-  rachio:
-    title: Rachio
-    url: "https://app.rach.io"
-    icon: mdi:water-pump
-    
+  # rachio:
+  #   title: Rachio
+  #   url: "https://app.rach.io"
+  #   icon: mdi:water-pump
+  log_viewer:
+    title: Log Viewer
+    icon: mdi:script-text
+    url: !secret log_viewer_url
+  cameras:
+    title: Cameras
+    icon: mdi:cctv
+    url: !secret camera_url
+
+### WEATHER ###
+weather:
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+    mode: daily
     
 sensor: !include sensors.yaml
 group: !include groups.yaml
@@ -214,3 +227,5 @@ input_select: !include input_selects.yaml
 #input_number: !include input_numbers.yaml
 alert: !include alerts.yaml
 light: !include lights.yaml
+binary_sensor: !include binary_sensors.yaml
+timer: !include timers.yaml

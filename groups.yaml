@@ -47,7 +47,7 @@
   outside_lights:
     name: Outside Lights
     entities:
-      - light.front_lights
+      - switch.front_lights
       - switch.deck_light_switch
       - switch.driveway_switch
       
@@ -170,19 +170,6 @@
       - sensor.multisensor_sourcenodeid
       - sensor.multisensor_temperature
       - sensor.multisensor_ultraviolet
-  
-  weather:
-    name: Weather
-    entities:
-      - sensor.pws_alerts
-      - sensor.pws_temp_f
-      - sensor.pws_feelslike_f
-      - sensor.pws_relative_humidity
-      - sensor.pws_wind_mph
-      - sensor.pws_precip_today_in
-      - sensor.pws_weather
-      - sensor.pws_precip_1d_in
-      - sensor.pws_precip_1d
       
   speedtest:
     name: Speedtest
@@ -263,8 +250,6 @@
     view: yes
     entities:
       - sun.sun
-      - sensor.pws_precip_1d
-      - sensor.pws_temp_f
       - group.outside_lights
       - group.irrigation
 
@@ -286,14 +271,6 @@
       - media_player.all_speakers
       - group.downstairs_media
       - group.upstairs_media
-
-  ### WEATHER VIEW ###
-  weather_view:
-    name: Weather
-    icon: mdi:weather-partlycloudy
-    view: yes
-    entities:
-      - group.weather
   
   ### UTILITIES VIEW ###
   utilities:

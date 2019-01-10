@@ -1,38 +1,70 @@
 #################################################################
-## Zone Automations
+## Coming Home Automations
 #################################################################
 
-  - alias: Coming Home
+  - alias: Turn on timer when coming_home switch is on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.coming_home
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.coming_home
+      - service: notify.html5
+        data:
+          message: "Coming home, preparing house."
+          
+  - alias: Turn off timer when coming_home switch is off
+    trigger:
+      - platform: state
+        entity_id: input_boolean.coming_home
+        to: 'off'
+    action:
+      - service: timer.cancel
+        entity_id: timer.coming_home
+  
+  - alias: Shut off coming_home switch when timer finishes
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.coming_home
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.coming_home 
+
+  - alias: Leave Zone to Come Home
     trigger:
       - platform: zone
-        entity_id: device_tracker.pat_phone, device_tracker.lina_phone
+        entity_id: device_tracker.patrick_phone, device_tracker.lina_phone
         zone: zone.work
         event: leave
       - platform: zone
-        entity_id: device_tracker.pat_phone, device_tracker.lina_phone
+        entity_id: device_tracker.patrick_phone, device_tracker.lina_phone
         zone: zone.staten_island
         event: leave
       - platform: zone
-        entity_id: device_tracker.pat_phone, device_tracker.lina_phone
+        entity_id: device_tracker.patrick_phone, device_tracker.lina_phone
         zone: zone.larry
         event: leave
     condition:
       condition: or
       conditions:
         - condition: zone
-          entity_id: device_tracker.pat_phone
+          entity_id: device_tracker.patrick_phone
           zone: zone.leave_work
         - condition: zone
           entity_id: device_tracker.lina_phone
           zone: zone.leave_work
         - condition: zone
-          entity_id: device_tracker.pat_phone
+          entity_id: device_tracker.patrick_phone
           zone: zone.leave_staten_island
         - condition: zone
           entity_id: device_tracker.lina_phone
           zone: zone.leave_staten_island
         - condition: zone
-          entity_id: device_tracker.pat_phone
+          entity_id: device_tracker.patrick_phone
           zone: zone.leave_larry
         - condition: zone
           entity_id: device_tracker.lina_phone
@@ -42,18 +74,18 @@
         data:
           entity_id: climate.upstairs
           away_mode: 'off'
-      - service: notify.html5
+      - service: input_boolean.turn_on
         data:
-          message: "Coming home, preparing house."
+          entity_id: input_boolean.coming_home
           
   # - alias: Coming Home
   #   trigger:
   #     - platform: zone
-  #       entity_id: device_tracker.pat_phone
+  #       entity_id: device_tracker.patrick_phone
   #       zone: zone.work
   #       event: leave
   #     - platform: zone
-  #       entity_id: device_tracker.pat_phone
+  #       entity_id: device_tracker.patrick_phone
   #       zone: zone.staten_island
   #       event: leave
   #     - platform: zone
@@ -68,10 +100,10 @@
   #     condition: or
   #     conditions:
   #       - condition: zone
-  #         entity_id: device_tracker.pat_phone
+  #         entity_id: device_tracker.patrick_phone
   #         zone: zone.leave_work
   #       - condition: zone
-  #         entity_id: device_tracker.pat_phone
+  #         entity_id: device_tracker.patrick_phone
   #         zone: zone.leave_staten_island
   #       - condition: zone
   #         entity_id: device_tracker.lina_phone

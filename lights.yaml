@@ -16,8 +16,8 @@
           data:
             entity_id: switch.christmas_vegetable
             
-  - platform: group
-    name: Front Lights
-    entities:
-      - light.front_porch
-      - light.front_post
+  # - platform: group
+  #   name: Front Lights
+  #   entities:
+  #     - light.front_porch
+  #     - light.front_post

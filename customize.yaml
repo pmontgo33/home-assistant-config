@@ -7,8 +7,7 @@ switch.bedroom_light_switch:
 light.master_bathroom_light_level:
   friendly_name: Bathroom Light
   icon: mdi:ceiling-light
-switch.front_lights_switch:
-  friendly_name: Front Lights
+switch.front_lights:
   icon: mdi:lightbulb
 switch.deck_light_switch:
   friendly_name: Deck Light
@@ -98,3 +97,7 @@ cover.main_water_valve:
   device_class: damper
 light.christmas_tree:
   icon: mdi:pine-tree
+sensor.outside_temperature:
+  friendly_name: Outside Temperature
+sensor.outside_humidity:
+  friendly_name: Outside Humidity

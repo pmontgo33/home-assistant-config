@@ -33,10 +33,6 @@ dim_master_bath:
 sleep_script:
   alias: Sleep Script
   sequence:
-  - alias: Turn off Christmas Tree
-    data:
-      entity_id: switch.christmas_tree_switch
-    service: switch.turn_off
   - delay:
       minutes: 30
   - wait_template: "{{ states.light.master_bathroom_light_level.state == 'off' }}"
@@ -59,3 +55,13 @@ wake_script:
   - alias: Brighten Master Bathroom Lights and Turn Off
     data: {}
     service: script.brighten_master_bath
+
+cast_nursery_camera:
+  alias: Cast Nursery Camera
+  sequence:
+  - alias: send nursery cam to living room tv
+    service: media_player.play_media
+    data:
+      entity_id: media_player.bedroom_tv
+      media_content_type: 'video'
+      media_content_id: !secret nursery_input

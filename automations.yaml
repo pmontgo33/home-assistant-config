@@ -12,8 +12,8 @@
 - action:
   - alias: Front Lights ON
     data:
-      entity_id: light.front_lights
-    service: light.turn_on
+      entity_id: switch.front_lights
+    service: switch.turn_on
   alias: Front Lights ON at sunset
   condition: []
   id: '1505425124887'
