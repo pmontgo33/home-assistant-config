@@ -2,10 +2,12 @@
 ## HVAC Automation
 #################################################################
 
-  - alias: Home Mode Change, Set Thermostats
+  - alias: Home Mode Change OR Home Assistant Restart, Set Thermostats
     trigger:
       - platform: state
         entity_id: sensor.house_mode
+      - platform: homeassistant
+        event: start
     action:
       - delay: 0:00:05
       - service: python_script.set_thermostats

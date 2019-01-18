@@ -71,16 +71,14 @@
         value_template: '{{ states.weather.dark_sky.attributes.humidity }}'
         unit_of_measurement: '%'
         device_class: humidity
-      
-      
-      # test_zone:
-      #   value_template: '{{ states.group.all_devices.state }}'
-      # living_room_temp:
-      #   value_template: '{{ states.climate.upstairs.attributes.current_temperature }}'
         
   - platform: mqtt
     name: "Smoke Detector"
     state_topic: "home/safety/smoke_detector"
+  - platform: mqtt
+    name: "House Mode Event"
+    state_topic: "home/modes/event"
+    icon: mdi:home-plus
   
   - platform: speedtest
     monitored_conditions:
@@ -96,3 +94,12 @@
     end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     duration:
       hours: 24
+      
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+    update_interval: 00:15
+    forecast:
+      - 0
+    monitored_conditions:
+      - precip_probability
+      - precip_intensity

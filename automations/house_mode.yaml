@@ -1,0 +1,112 @@
+#################################################################
+## House Mode Automations
+#################################################################
+
+
+  - alias: House Mode Notifications
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode
+        to: 'Away'
+      - platform: state
+        entity_id: sensor.house_mode
+        to: 'Coming Home'
+    action:
+      - service: notify.html5
+        data_template:
+          message: >
+            {% if states('sensor.house_mode') == 'Away' %}
+              House in Away Mode
+            {% else %}
+              Coming home, preparing house
+            {% endif %}
+
+  - alias: Arrived Event
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Away'
+        to: 'Home'
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Away'
+        to: 'Sleep'
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Coming Home'
+        to: 'Home'
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Coming Home'
+        to: 'Sleep'
+    action:
+      - service: mqtt.publish
+        data:
+          topic: home/modes/event
+          payload_template: 'Arrived Home'
+          retain: True
+
+  - alias: Left Event
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Home'
+        to: 'Away'
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Sleep'
+        to: 'Away'
+    action:
+      - service: mqtt.publish
+        data:
+          topic: home/modes/event
+          payload_template: 'Left Home'
+          retain: True
+
+  - alias: Woke Up Event
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Sleep'
+        to: 'Home'
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Waking Up'
+        to: 'Home'
+    action:
+      - service: mqtt.publish
+        data:
+          topic: home/modes/event
+          payload_template: 'Woke Up'
+          retain: True
+          
+  - alias: From Home To Sleep Event
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Home'
+        to: 'Sleep'
+    action:
+      - service: mqtt.publish
+        data:
+          topic: home/modes/event
+          payload_template: 'To Sleep'
+          retain: True
+  
+  - alias: From Away To Sleep Event
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Away'
+        to: 'Sleep'
+      - platform: state
+        entity_id: sensor.house_mode
+        from: 'Coming Home'
+        to: 'Sleep'
+    action:
+      - delay: 0:20
+      - service: mqtt.publish
+        data:
+          topic: home/modes/event
+          payload_template: 'To Sleep'
+          retain: True

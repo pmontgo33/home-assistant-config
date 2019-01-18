@@ -1,0 +1,39 @@
+#################################################################
+## Calendar Automations
+#################################################################
+
+  - alias: Trash Day Notification at 7pm night before
+    trigger:
+      - platform: state
+        entity_id: calendar.home_assistant
+        to: 'on'
+    condition:
+      - condition: template
+        value_template: "{{ states.calendar.home_assistant.attributes.message == 'Trash Day' }}"
+    action:
+      - service: tts.google_say
+        entity_id: media_player.first_floor, media_player.master_speaker
+        data:
+          message: 'Remember to take the trash out!'
+      - service: notify.html5
+        data:
+          message: "Remember to take the trash out!"
+      
+  - alias: Test Event Notification
+    trigger:
+      - platform: template
+        value_template: "{{ is_state_attr('calendar.home_assistant', 'offset_reached', true) }}"
+    condition:
+      - condition: template
+        value_template: "{{ states.calendar.home_assistant.attributes.message == 'Test Event' }}"
+    action:
+      - service: persistent_notification.create
+        data:
+          title: "Test Event"
+          message: "Test Event Notification Triggered"
+      - service: notify.html5
+        data:
+          message: "Test Event Notification Triggered"
+      # - service: tts.google_say
+      #   data:
+      #     message: 'Remember to take the trash out!'

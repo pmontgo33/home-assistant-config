@@ -4,12 +4,14 @@ resources:
     type: js
   - url: /local/toggle-lock-entity-row.js
     type: js
+  - url: /local/entity-attributes-card.js?v=2
+    type: js
 
 views:
   - title: default_view
     icon: mdi:home-assistant
     badges:
-      - updater.updater
+      # - updater.updater
       - device_tracker.patrick_phone
       - device_tracker.lina_phone
     cards:
@@ -35,7 +37,6 @@ views:
               # - sensor.house_mode
               - input_select.home_climate_mode
               - input_boolean.show_modes
-            
           - type: conditional
             conditions:
               - entity: input_boolean.show_modes
@@ -43,20 +44,23 @@ views:
             card:
               type: entities
               entities:
+                - sensor.house_mode_event
+                - type: section
+                  label: Away Mode
+                - binary_sensor.someone_home
                 - entity: input_boolean.away_mode
                   type: custom:toggle-lock-entity-row
-                - binary_sensor.someone_home
-                - type: divider
+                - entity: input_boolean.coming_home
+                  type: custom:toggle-lock-entity-row
+                - timer.coming_home
+                - type: section
+                  label: Sleep Mode
                 - entity: input_boolean.sleep_mode
                   type: custom:toggle-lock-entity-row
                 - entity: input_boolean.waking_up
                   type: custom:toggle-lock-entity-row
                 - timer.waking_up
-                - type: divider
-                - entity: input_boolean.coming_home
-                  type: custom:toggle-lock-entity-row
-                - timer.coming_home
-      
+
       - type: conditional
         id: christmas_tree
         conditions:
@@ -68,22 +72,53 @@ views:
           tap_action:
             action: toggle
       
-      - type: entities
-        title: Climate
-        show_header_toggle: false
-        entities:
-          - type: section
-            label: Downstairs
-          - climate.downstairs
-          - climate.dining_room
-          - climate.kitchen_main
-          - climate.kitchen_rear
-          - climate.foyer
-          - type: section
-            label: Upstairs
-          - climate.upstairs
-          - climate.master_bath
-          - climate.hall_bath
+      - type: conditional
+        id: home_climate_heat
+        conditions:
+          - entity: input_select.home_climate_mode
+            state: 'Heat'
+        card:
+          type: entities
+          title: Climate
+          show_header_toggle: false
+          entities:
+            - type: section
+              label: Downstairs
+            - entity: climate.downstairs
+              name: Living Room
+            - climate.dining_room
+            - climate.kitchen_main
+            - climate.kitchen_rear
+            - climate.foyer
+            - type: section
+              label: Upstairs
+            - climate.upstairs
+            - climate.master_bath
+            - climate.hall_bath
+      
+      - type: conditional
+        id: home_climate_cool
+        conditions:
+          - entity: input_select.home_climate_mode
+            state: 'Cool'
+        card:
+          type: entities
+          title: Climate
+          show_header_toggle: false
+          entities:
+            - type: section
+              label: Downstairs
+            - entity: climate.downstairs
+              name: Downstairs
+            - climate.dining_room
+            - climate.kitchen_main
+            - climate.kitchen_rear
+            - climate.foyer
+            - type: section
+              label: Upstairs
+            - climate.upstairs
+            - climate.master_bath
+            - climate.hall_bath
       
       - type: weather-forecast
         entity: weather.dark_sky
@@ -104,14 +139,6 @@ views:
           - entity: switch.main_water_valve_switch
             type: custom:toggle-lock-entity-row
           - group.leak_detectors
-      
-      # - type: entities
-      #   title: Floorplans
-      #   entities:
-      #     - type: weblink
-      #       name: First Floor
-      #       url: /lovelace/floorplan1
-      #       icon: mdi:numeric-1-box
 
 ### DOWNSTAIRS ###  
   - title: Downstairs
@@ -208,14 +235,7 @@ views:
             entity: media_player.3rd_floor_speaker
           - type: media-control
             entity: media_player.bedroom_tv
-    #   - type: glance
-    #     title: Media
-    #     entities:
-    #       - media_player.upstairs
-    #       - media_player.master_speaker
-    #       - media_player.nursery_speaker
-    #       - media_player.3rd_floor_speaker
-    #       - media_player.bedroom_tv
+
 ### OUTSIDE ###  
   - title: Outside
     icon: mdi:tree
@@ -238,9 +258,6 @@ views:
           show_header_toggle: false
           entities:
             - binary_sensor.rachio_online
-            # - switch.rachio_in_standby_mode
-            # - group.front_irrigation
-            # - group.back_irrigation
         - type: iframe
           url: !secret rachio_zones_url
           aspect_ratio: 125%
@@ -260,130 +277,130 @@ views:
         camera_image: camera.nursery_camera
         show_info: true
 
-### 1ST FLOORPLAN ###
-  - icon: mdi:numeric-1-box
-    title: 1st Floorplan
-    id: floorplan1
-    panel: true
-    cards:
-      - type: picture-elements
-        image: /local/FirstFloorPlan.png
-        elements:
-          - type: custom:state-attribute-element
-            entity: climate.downstairs
-            attribute: current_temperature
-            style:
-              top: 80%
-              left: 47%
-          - type: state-label
-            entity: sensor.upstairs_climate_status
-            style:
-              top: 82%
-              left: 79%
-          - type: service-button
-            title: Turn lights off
-            style:
-              top: 95%
-              left: 80%
-            service: light.turn_off
-            service_data:
-                entity_id: group.downstairs_lights
+# ### 1ST FLOORPLAN ###
+#   - icon: mdi:numeric-1-box
+#     title: 1st Floorplan
+#     id: floorplan1
+#     panel: true
+#     cards:
+#       - type: picture-elements
+#         image: /local/FirstFloorPlan.png
+#         elements:
+#           - type: custom:state-attribute-element
+#             entity: climate.downstairs
+#             attribute: current_temperature
+#             style:
+#               top: 80%
+#               left: 47%
+#           - type: state-label
+#             entity: sensor.upstairs_climate_status
+#             style:
+#               top: 82%
+#               left: 79%
+#           - type: service-button
+#             title: Turn lights off
+#             style:
+#               top: 95%
+#               left: 80%
+#             service: light.turn_off
+#             service_data:
+#                 entity_id: group.downstairs_lights
 
-### 2ND FLOORPLAN ###                
-  - icon: mdi:numeric-2-box
-    title: 2nd Floorplan
-    id: floorplan2
-    panel: true
-    cards:
-      - type: picture-elements
-        image: /local/SecondFloorPlan.png
-        elements:
-          - type: custom:state-attribute-element
-            entity: climate.upstairs
-            attribute: temperature
-            suffix: °
-            style:
-              top: 51%
-              left: 60%
-          - type: state-icon
-            entity: climate.upstairs
-            style:
-              top: 55%
-              left: 60%
-          - type: state-icon
-            tap_action: 
-              action: toggle
-            entity: switch.bedroom_light_switch
-            style:
-              top: 35%
-              left: 34%
-          - type: state-icon
-            tap_action: 
-              action: toggle
-            entity: fan.bedroom_fan_level
-            style:
-              top: 30%
-              left: 34%
-          - type: state-icon
-            tap_action: 
-              action: toggle
-            entity: light.master_bathroom_light_level
-            style:
-              top: 28%
-              left: 54%
-          - type: state-icon
-            entity: climate.master_bath
-            style:
-              top: 30%
-              left: 59%
-          # - type: custom:state-attribute-element
-          #   entity: climate.master_bath
-          #   attribute: temperature
-          #   suffix: °
-          #   style:
-          #     top: 26%
-          #     left: 59%
-          # - type: state-icon
-          #   entity: climate.hall_bath
-          #   style:
-          #     top: 15%
-          #     left: 71%
-          # - type: custom:state-attribute-element
-          #   entity: climate.hall_bath
-          #   attribute: temperature
-          #   suffix: °
-          #   style:
-          #     top: 11%
-          #     left: 71%
-          - type: state-icon
-            tap_action: 
-              action: toggle
-            entity: light.bedside
-            style:
-              top: 22%
-              left: 24%
-          - type: state-icon
-            entity: media_player.bedroom_tv
-            style:
-              top: 21%
-              left: 42%
-          - type: icon
-            entity: camera.bedroom_camera
-            icon: mdi:cctv
-            style:
-              top: 25%
-              left: 42%
-          - type: icon
-            entity: camera.nursery_camera
-            icon: mdi:cctv
-            style:
-              top: 65%
-              left: 75%
-          - type: state-icon
-            entity: binary_sensor.laundry_leak_sensor
-            style:
-              top: 24%
-              left: 74%
+# ### 2ND FLOORPLAN ###                
+#   - icon: mdi:numeric-2-box
+#     title: 2nd Floorplan
+#     id: floorplan2
+#     panel: true
+#     cards:
+#       - type: picture-elements
+#         image: /local/SecondFloorPlan.png
+#         elements:
+#           - type: custom:state-attribute-element
+#             entity: climate.upstairs
+#             attribute: temperature
+#             suffix: °
+#             style:
+#               top: 51%
+#               left: 60%
+#           - type: state-icon
+#             entity: climate.upstairs
+#             style:
+#               top: 55%
+#               left: 60%
+#           - type: state-icon
+#             tap_action: 
+#               action: toggle
+#             entity: switch.bedroom_light_switch
+#             style:
+#               top: 35%
+#               left: 34%
+#           - type: state-icon
+#             tap_action: 
+#               action: toggle
+#             entity: fan.bedroom_fan_level
+#             style:
+#               top: 30%
+#               left: 34%
+#           - type: state-icon
+#             tap_action: 
+#               action: toggle
+#             entity: light.master_bathroom_light_level
+#             style:
+#               top: 28%
+#               left: 54%
+#           - type: state-icon
+#             entity: climate.master_bath
+#             style:
+#               top: 30%
+#               left: 59%
+#           # - type: custom:state-attribute-element
+#           #   entity: climate.master_bath
+#           #   attribute: temperature
+#           #   suffix: °
+#           #   style:
+#           #     top: 26%
+#           #     left: 59%
+#           # - type: state-icon
+#           #   entity: climate.hall_bath
+#           #   style:
+#           #     top: 15%
+#           #     left: 71%
+#           # - type: custom:state-attribute-element
+#           #   entity: climate.hall_bath
+#           #   attribute: temperature
+#           #   suffix: °
+#           #   style:
+#           #     top: 11%
+#           #     left: 71%
+#           - type: state-icon
+#             tap_action: 
+#               action: toggle
+#             entity: light.bedside
+#             style:
+#               top: 22%
+#               left: 24%
+#           - type: state-icon
+#             entity: media_player.bedroom_tv
+#             style:
+#               top: 21%
+#               left: 42%
+#           - type: icon
+#             entity: camera.bedroom_camera
+#             icon: mdi:cctv
+#             style:
+#               top: 25%
+#               left: 42%
+#           - type: icon
+#             entity: camera.nursery_camera
+#             icon: mdi:cctv
+#             style:
+#               top: 65%
+#               left: 75%
+#           - type: state-icon
+#             entity: binary_sensor.laundry_leak_sensor
+#             style:
+#               top: 24%
+#               left: 74%
 
 ### SETTINGS ###
   - title: Settings
@@ -406,6 +423,8 @@ views:
         entities:
           - group.all_automations
           - group.all_scripts
+      - type: shopping-list
+        title: To Do List
       - type: entities
         title: Speedtest
         show_header_toggle: true
@@ -427,21 +446,19 @@ views:
       - type: entities
         entities:
           - sensor.living_room_heating
-          - sensor.upstairs_op_mode
-          - sensor.downstairs_op_mode
-          - sensor.since_last_boot
           - sensor.nursery_camera_motion_detected
-          - light.front_lights
-          - switch.foyer_closet_light
       - type: entities
-        title: Water Devices
+        title: Google Calendar
         show_header_toggle: false
         entities:
-          - switch.main_water_valve_switch
-          - binary_sensor.laundry_leak_sensor
-          - sensor.laundry_leak_flood
-          - sensor.laundry_leak_sourcenodeid
-          - group.leak_detectors
+          - calendar.home_assistant
+          - type: custom:entity-attributes-card
+            title: Attributes Card
+            heading_name: List
+            heading_state: States
+            filter:
+              include:
+                - key: calendar.home_assistant.*
       - type: history-graph
         title: Outside Temp & Living Room Heating
         hours_to_show: 168
@@ -450,6 +467,10 @@ views:
           - sensor.living_room_heating
       - type: sensor
         entity: sensor.outside_temperature
-      - type: sensor
-        entity: sensor.house_mode
-        
+        graph: line
+      - type: history-graph
+        title: Dark Sky Precip Sensors
+        hours_to_show: 24
+        entities:
+          - sensor.dark_sky_precip_probability_0
+          - sensor.dark_sky_precip_intensity_0

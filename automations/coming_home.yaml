@@ -10,9 +10,9 @@
     action:
       - service: timer.start
         entity_id: timer.coming_home
-      - service: notify.html5
-        data:
-          message: "Coming home, preparing house."
+      # - service: notify.html5
+      #   data:
+      #     message: "Coming home, preparing house."
           
   - alias: Turn off timer when coming_home switch is off
     trigger:

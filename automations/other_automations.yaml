@@ -2,6 +2,16 @@
 ## Other Automations
 #################################################################
 
+  - alias: Home Assistant Start Notification
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - service: persistent_notification.create
+        data:
+          title: "Home Assistant"
+          message: "Successfully started!"
+
   - alias: Smoke Alarm ON
     trigger:
       - platform: state
@@ -45,7 +55,23 @@
     action:
       service: homeassistant.turn_off
       entity_id: group.inside_lights
-  
+
+  - alias: Certain Inside Lights On when Awake/Arrive at Dark
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode_event
+        to: 'Arrived Home'
+      - platform: state
+        entity_id: sensor.house_mode_event
+        to: 'Woke Up'
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      service: homeassistant.turn_on
+      entity_id: group.inside_entry_lights
+
   - alias: Christmas Tree ON while Home during Christmas Season
     trigger:
       - platform: state

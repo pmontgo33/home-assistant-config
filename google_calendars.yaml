@@ -1,0 +1,105 @@
+
+- cal_id: hhhr6q8lmpm4a9221vreojrc7c@group.calendar.google.com
+  entities:
+  - device_id: home_assistant
+    ignore_availability: true
+    name: Home Assistant
+    track: true
+    
+- cal_id: pmontgo33@gmail.com
+  entities:
+  - device_id: pm_personal
+    ignore_availability: true
+    name: PM Personal
+    track: true
+    
+- cal_id: pasqualina.montgomery@gmail.com
+  entities:
+  - device_id: pasqualina_montgomery_gmail_com
+    ignore_availability: true
+    name: pasqualina.montgomery@gmail.com
+    track: false
+
+- cal_id: gamecommcalendar@gmail.com
+  entities:
+  - device_id: pa_game_commission_seasons_calendar
+    ignore_availability: true
+    name: PA Game Commission Seasons Calendar
+    track: false
+
+- cal_id: dmt3vs9r0n8sfrj12qs3cc231k@group.calendar.google.com
+  entities:
+  - device_id: lawn_garden
+    ignore_availability: true
+    name: Lawn & Garden
+    track: false
+
+- cal_id: npapjr2hfh1cbs15a7cb9h4uvs@group.calendar.google.com
+  entities:
+  - device_id: hunting
+    ignore_availability: true
+    name: Hunting
+    track: false
+
+- cal_id: gvfnak7lbp9glum9mjojs09t58@group.calendar.google.com
+  entities:
+  - device_id: phillies_sunday_ticket_games
+    ignore_availability: true
+    name: Phillies Sunday Ticket Games
+    track: false
+
+- cal_id: andygould9@gmail.com
+  entities:
+  - device_id: andrew_gould
+    ignore_availability: true
+    name: Andrew Gould
+    track: false
+
+- cal_id: family15946739306722874270@group.calendar.google.com
+  entities:
+  - device_id: family
+    ignore_availability: true
+    name: Family
+    track: false
+
+- cal_id: 1i725qi5suffm1tjbcluviiaes@group.calendar.google.com
+  entities:
+  - device_id: pat_and_lina
+    ignore_availability: true
+    name: Pat and Lina
+    track: false
+
+- cal_id: bpb50mkfk299dmle180ga6dk65glubh9@import.calendar.google.com
+  entities:
+  - device_id: philadelphia_flyers_calendar_nhl
+    ignore_availability: true
+    name: Philadelphia Flyers Calendar (nhl)
+    track: false
+
+- cal_id: en.usa#holiday@group.v.calendar.google.com
+  entities:
+  - device_id: holidays_in_united_states
+    ignore_availability: true
+    name: Holidays in United States
+    track: false
+
+- cal_id: mlb_22_%50hiladelphia+%50hillies#sports@group.v.calendar.google.com
+  entities:
+  - device_id: philadelphia_phillies
+    ignore_availability: true
+    name: Philadelphia Phillies
+    track: false
+
+- cal_id: nfl_21_%50hiladelphia+%45agles#sports@group.v.calendar.google.com
+  entities:
+  - device_id: philadelphia_eagles
+    ignore_availability: true
+    name: Philadelphia Eagles
+    track: false
+
+- cal_id: p#weather@group.v.calendar.google.com
+  entities:
+  - device_id: weather
+    ignore_availability: true
+    name: Weather
+    track: false

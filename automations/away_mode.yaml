@@ -7,33 +7,42 @@
       - platform: template
         value_template: "{{ is_state_attr('climate.upstairs', 'away_mode', 'on') }}"
       - platform: state
-        entity_id: group.all_devices
-        from: 'home'
-        to: 'not_home'
+        entity_id: binary_sensor.someone_home
+        to: 'off'
+      - platform: homeassistant
+        event: start
     condition:
       condition: and
       conditions:
         - condition: template
           value_template: "{{ is_state_attr('climate.upstairs', 'away_mode', 'on') }}"
         - condition: state
-          entity_id: group.all_devices
-          state: 'not_home'
+          entity_id: binary_sensor.someone_home
+          state: 'off'
     action:
       - service: input_boolean.turn_on
         entity_id: input_boolean.away_mode
-      - service: notify.html5
-        data:
-          message: "House in Away Mode"
+    #   - service: notify.html5
+    #     data:
+    #       message: "House in Away Mode"
   
   - alias: Away Off When Home
     trigger:
+      - platform: template
+        value_template: "{{ is_state_attr('climate.upstairs', 'away_mode', 'off') }}"
       - platform: state
-        entity_id: sensor.upstairs_away_mode
-        to: 'False'
-      - platform: state
-        entity_id: group.all_devices
-        from: 'not_home'
-        to: 'home'
+        entity_id: binary_sensor.someone_home
+        to: 'on'
+      - platform: homeassistant
+        event: start
+    condition:
+      condition: or
+      conditions:
+        - condition: template
+          value_template: "{{ is_state_attr('climate.upstairs', 'away_mode', 'off') }}"
+        - condition: state
+          entity_id: binary_sensor.someone_home
+          state: 'on'
     action:
       service: input_boolean.turn_off
       entity_id: input_boolean.away_mode
