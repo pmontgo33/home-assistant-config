@@ -1,0 +1,57 @@
+title: Upstairs
+id: upstairs
+icon: mdi:arrow-up
+cards:
+  - type: entities
+    title: Master Bedroom
+    show_header_toggle: true
+    entities:
+      - entity: switch.bedroom_light_switch
+        name: Overhead Light
+      - light.bedside
+      - fan.bedroom_fan_level
+      - light.master_bathroom_light_level
+      - entity: switch.humidifier_switch
+        name: Humidifier
+  - type: entities
+    title: 3rd Floor
+    show_header_toggle: true
+    entities:
+      - sensor.multisensor_temperature
+      - sensor.multisensor_relative_humidity
+  - type: entities
+    title: Upstairs Climate
+    show_header_toggle: false
+    entities:
+      - climate.upstairs
+      - climate.master_bath
+      - climate.hall_bath
+      - sensor.upstairs_thermostat_humidity
+      - group.upstairs_climate_status
+  - type: picture-entity
+    title: Bedroom Camera
+    entity: camera.bedroom_camera
+    camera_image: camera.bedroom_camera
+    show_info: true
+  - type: picture-entity
+    title: Nursery Camera
+    entity: camera.nursery_camera
+    camera_image: camera.nursery_camera
+    show_info: true
+  - type: entities
+    title: Laundry Room
+    show_header_toggle: true
+    entities:
+      - binary_sensor.laundry_leak_sensor
+  - type: horizontal-stack
+    cards:
+      - type: media-control
+        entity: media_player.upstairs
+      - type: media-control
+        entity: media_player.master_speaker
+      - type: media-control
+        entity: media_player.nursery_speaker
+      - type: media-control
+        entity: media_player.3rd_floor_speaker
+      - type: media-control
+        entity: media_player.bedroom_tv

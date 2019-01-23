@@ -1,0 +1,132 @@
+title: Home
+id: home
+icon: mdi:home-assistant
+badges:
+  # - updater.updater
+  - device_tracker.patrick_phone
+  - device_tracker.lina_phone
+cards:
+  - type: entity-filter
+    show_empty: false
+    entities:
+      - device_tracker.sheree
+      - device_tracker.mommy_tirro
+    state_filter:
+        - home
+    card: 
+        type: glance
+        title: Guests at Home
+  
+  - type: vertical-stack
+    cards:
+      - type: sensor
+        entity: sensor.house_mode
+      - type: entities
+        title: Modes
+        show_header_toggle: false
+        entities:
+          # - sensor.house_mode
+          - input_select.home_climate_mode
+          - input_boolean.show_modes
+      - type: conditional
+        conditions:
+          - entity: input_boolean.show_modes
+            state: "on"
+        card:
+          type: entities
+          entities:
+            - sensor.house_mode_event
+            - type: section
+              label: Away Mode
+            - binary_sensor.someone_home
+            - entity: input_boolean.away_mode
+              type: custom:toggle-lock-entity-row
+            - entity: input_boolean.coming_home
+              type: custom:toggle-lock-entity-row
+            - timer.coming_home
+            - type: section
+              label: Sleep Mode
+            - entity: input_boolean.sleep_mode
+              type: custom:toggle-lock-entity-row
+            - entity: input_boolean.waking_up
+              type: custom:toggle-lock-entity-row
+            - timer.waking_up
+
+  - type: conditional
+    id: christmas_tree
+    conditions:
+      - entity: input_boolean.christmas_season
+        state: "on"
+    card:
+      type: entity-button
+      entity: light.christmas_tree
+      tap_action:
+        action: toggle
+  
+  - type: conditional
+    id: home_climate_heat
+    conditions:
+      - entity: input_select.home_climate_mode
+        state: 'Heat'
+    card:
+      type: entities
+      title: Climate
+      show_header_toggle: false
+      entities:
+        - type: section
+          label: Downstairs
+        - entity: climate.downstairs
+          name: Living Room
+        - climate.dining_room
+        - climate.kitchen_main
+        - climate.kitchen_rear
+        - climate.foyer
+        - type: section
+          label: Upstairs
+        - climate.upstairs
+        - climate.master_bath
+        - climate.hall_bath
+  
+  - type: conditional
+    id: home_climate_cool
+    conditions:
+      - entity: input_select.home_climate_mode
+        state: 'Cool'
+    card:
+      type: entities
+      title: Climate
+      show_header_toggle: false
+      entities:
+        - type: section
+          label: Downstairs
+        - entity: climate.downstairs
+          name: Downstairs
+        - climate.dining_room
+        - climate.kitchen_main
+        - climate.kitchen_rear
+        - climate.foyer
+        - type: section
+          label: Upstairs
+        - climate.upstairs
+        - climate.master_bath
+        - climate.hall_bath
+  
+  - type: weather-forecast
+    entity: weather.dark_sky
+  
+  - type: entities
+    title: Alarms
+    show_header_toggle: false
+    entities:
+      - type: section
+        label: Smoke
+      - entity: input_boolean.smoke_alarm
+        type: custom:toggle-lock-entity-row
+      - sensor.smoke_detector
+      - type: section
+        label: Leaks
+      - entity: input_boolean.leak_alarm
+        type: custom:toggle-lock-entity-row
+      - entity: switch.main_water_valve_switch
+        type: custom:toggle-lock-entity-row
+      - group.leak_detectors

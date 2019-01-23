@@ -12,6 +12,15 @@
       - light.kitchen_chandelier
       - light.cabinets
   
+  downstairs_climate:
+    name: Downstairs Climate
+    entities:
+      - climate.downstairs
+      - climate.dining_room
+      - climate.kitchen_main
+      - climate.kitchen_rear
+      - climate.foyer
+  
   master_bedroom:
     name: Master Bedroom
     entities:

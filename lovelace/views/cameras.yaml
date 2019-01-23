@@ -1,0 +1,14 @@
+title: Cameras
+id: cameras
+icon: mdi:camcorder
+cards:
+  - type: picture-entity
+    title: Bedroom Camera
+    entity: camera.bedroom_camera
+    camera_image: camera.bedroom_camera
+    show_info: true
+  - type: picture-entity
+    title: Nursery Camera
+    entity: camera.nursery_camera
+    camera_image: camera.nursery_camera
+    show_info: true

@@ -1,0 +1,30 @@
+title: Settings
+id: settings
+icon: mdi:tune
+cards:
+  - type: entities
+    title: Settings
+    show_header_toggle: false
+    entities:
+      - type: call-service
+        name: Set Thermostats
+        service: python_script.set_thermostats
+        icon: mdi:thermostat-box
+        action_name: Set
+      - entity: input_boolean.christmas_season
+        type: custom:toggle-lock-entity-row
+  - type: entities
+    title: Automations and Scripts
+    show_header_toggle: true
+    entities:
+      - group.all_automations
+      - group.all_scripts
+  - type: shopping-list
+    title: To Do List
+  - type: entities
+    title: Speedtest
+    show_header_toggle: true
+    entities:
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload

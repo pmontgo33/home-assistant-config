@@ -1,0 +1,42 @@
+title: Testing
+id: testing
+icon: mdi:test-tube
+cards:
+  - type: entities
+    title: Christmas Tree & Vegetable Lights
+    entities:
+      - switch.christmas_vegetable
+      - input_boolean.christmas_season
+      - light.christmas_tree
+  - type: entities
+    entities:
+      - sensor.living_room_heating
+      - sensor.nursery_camera_motion_detected
+      - sensor.ha_cal_offset_reached
+  - type: entities
+    title: Google Calendar
+    show_header_toggle: false
+    entities:
+      - calendar.home_assistant
+      - type: custom:entity-attributes-card
+        title: Attributes Card
+        heading_name: List
+        heading_state: States
+        filter:
+          include:
+            - key: calendar.home_assistant.*
+  - type: history-graph
+    title: Outside Temp & Living Room Heating
+    hours_to_show: 168
+    entities:
+      - sensor.outside_temperature
+      - sensor.living_room_heating
+  - type: sensor
+    entity: sensor.outside_temperature
+    graph: line
+  - type: history-graph
+    title: Dark Sky Precip Sensors
+    hours_to_show: 24
+    entities:
+      - sensor.dark_sky_precip_probability_0
+      - sensor.dark_sky_precip_intensity_0

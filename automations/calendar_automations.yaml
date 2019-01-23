@@ -4,9 +4,8 @@
 
   - alias: Trash Day Notification at 7pm night before
     trigger:
-      - platform: state
-        entity_id: calendar.home_assistant
-        to: 'on'
+      - platform: template
+        value_template: "{{ is_state_attr('calendar.home_assistant', 'offset_reached', true) }}"
     condition:
       - condition: template
         value_template: "{{ states.calendar.home_assistant.attributes.message == 'Trash Day' }}"

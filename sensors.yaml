@@ -103,3 +103,9 @@
     monitored_conditions:
       - precip_probability
       - precip_intensity
+  
+  - platform: template
+    sensors:
+      ha_cal_offset_reached:
+        friendly_name: HA Cal Offset Reached
+        value_template: "{{ states.calendar.home_assistant.attributes.offset_reached }}"

@@ -1,0 +1,27 @@
+title: 1st Floorplan
+id: floorplan1
+icon: mdi:numeric-1-box
+panel: true
+cards:
+  - type: picture-elements
+    image: /local/FirstFloorPlan.png
+    elements:
+      - type: custom:state-attribute-element
+        entity: climate.downstairs
+        attribute: current_temperature
+        style:
+          top: 80%
+          left: 47%
+      - type: state-label
+        entity: sensor.upstairs_climate_status
+        style:
+          top: 82%
+          left: 79%
+      - type: service-button
+        title: Turn lights off
+        style:
+          top: 95%
+          left: 80%
+        service: light.turn_off
+        service_data:
+            entity_id: group.downstairs_lights

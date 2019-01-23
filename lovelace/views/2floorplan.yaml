@@ -1,0 +1,94 @@
+title: 2nd Floorplan
+icon: mdi:numeric-2-box
+id: floorplan2
+panel: true
+cards:
+  - type: picture-elements
+    image: /local/SecondFloorPlan.png
+    elements:
+      - type: custom:state-attribute-element
+        entity: climate.upstairs
+        attribute: temperature
+        suffix: °
+        style:
+          top: 51%
+          left: 60%
+      - type: state-icon
+        entity: climate.upstairs
+        style:
+          top: 55%
+          left: 60%
+      - type: state-icon
+        tap_action: 
+          action: toggle
+        entity: switch.bedroom_light_switch
+        style:
+          top: 35%
+          left: 34%
+      - type: state-icon
+        tap_action: 
+          action: toggle
+        entity: fan.bedroom_fan_level
+        style:
+          top: 30%
+          left: 34%
+      - type: state-icon
+        tap_action: 
+          action: toggle
+        entity: light.master_bathroom_light_level
+        style:
+          top: 28%
+          left: 54%
+      - type: state-icon
+        entity: climate.master_bath
+        style:
+          top: 30%
+          left: 59%
+      # - type: custom:state-attribute-element
+      #   entity: climate.master_bath
+      #   attribute: temperature
+      #   suffix: °
+      #   style:
+      #     top: 26%
+      #     left: 59%
+      # - type: state-icon
+      #   entity: climate.hall_bath
+      #   style:
+      #     top: 15%
+      #     left: 71%
+      # - type: custom:state-attribute-element
+      #   entity: climate.hall_bath
+      #   attribute: temperature
+      #   suffix: °
+      #   style:
+      #     top: 11%
+      #     left: 71%
+      - type: state-icon
+        tap_action: 
+          action: toggle
+        entity: light.bedside
+        style:
+          top: 22%
+          left: 24%
+      - type: state-icon
+        entity: media_player.bedroom_tv
+        style:
+          top: 21%
+          left: 42%
+      - type: icon
+        entity: camera.bedroom_camera
+        icon: mdi:cctv
+        style:
+          top: 25%
+          left: 42%
+      - type: icon
+        entity: camera.nursery_camera
+        icon: mdi:cctv
+        style:
+          top: 65%
+          left: 75%
+      - type: state-icon
+        entity: binary_sensor.laundry_leak_sensor
+        style:
+          top: 24%
+          left: 74%

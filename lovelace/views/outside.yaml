@@ -1,0 +1,25 @@
+title: Outside
+id: outside
+icon: mdi:tree
+badges:
+  - sun.sun
+  - sensor.outside_temperature
+  - sensor.outside_humidity
+cards:
+  - type: entities
+    title: Outside Lights
+    show_header_toggle: true
+    entities:
+      - switch.front_lights
+      - switch.deck_light_switch
+      - switch.driveway_switch
+  - type: vertical-stack
+    cards:
+    - type: entities
+      title: Irrigation
+      show_header_toggle: false
+      entities:
+        - binary_sensor.rachio_online
+    - type: iframe
+      url: !secret rachio_zones_url
+      aspect_ratio: 125%
