@@ -2,6 +2,7 @@
 ## Binary Sensors
 #################################################################
 
+binary_sensor:
   - platform: rachio
   
   - platform: template

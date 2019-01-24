@@ -1,0 +1,25 @@
+#################################################################
+## Panel Iframe
+#################################################################
+
+panel_iframe:
+  ide:
+    title: IDE
+    icon: mdi:language-python
+    url: !secret ide_url
+  terminal:
+    title: Terminal
+    icon: mdi:console
+    url: !secret terminal_url
+  esphomelib:
+    title: ESPHomeLib
+    icon: mdi:raspberrypi
+    url: !secret esp_url
+  log_viewer:
+    title: Log Viewer
+    icon: mdi:script-text
+    url: !secret log_viewer_url
+  cameras:
+    title: Cameras
+    icon: mdi:cctv
+    url: !secret camera_url

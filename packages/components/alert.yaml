@@ -2,6 +2,7 @@
 ## Alerts
 #################################################################
 
+alert:
   smoke_alarm:
     name: Smoke Alarm
     entity_id: input_boolean.smoke_alarm

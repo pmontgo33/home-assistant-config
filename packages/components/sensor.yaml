@@ -2,6 +2,7 @@
 ## Sensors
 #################################################################
 
+sensor:
 #  - platform: yr
   # - platform: pi_hole
 #  - platform: plex

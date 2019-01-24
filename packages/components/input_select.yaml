@@ -2,6 +2,7 @@
 ## Input Selects
 #################################################################
 
+input_select:
   home_climate_mode:
     name: Whole Home Climate Mode
     options:

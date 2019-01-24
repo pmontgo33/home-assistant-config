@@ -2,6 +2,7 @@
 ## Lights
 #################################################################
 
+light:
   - platform: template
     lights:
       christmas_tree:

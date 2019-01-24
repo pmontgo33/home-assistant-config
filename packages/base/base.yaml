@@ -1,0 +1,97 @@
+#################################################################
+## Base Configuration
+#################################################################
+
+logger:
+  default: info
+
+# Enables the frontend
+frontend:
+lovelace:
+  mode: yaml
+# Enables configuration UI
+config:
+http:
+  api_password: !secret api_password
+#   base_url: !secret base_url
+
+cloud:
+  google_actions:
+    filter:
+      exclude_domains:
+        - script
+        - media_player
+    entity_config:
+      switch.driveway_switch:
+        name: Driveway Light
+
+google_domains:
+  domain: !secret google_domains_domain
+  username: !secret google_domains_username
+  password: !secret google_domains_password
+
+# Checks for available updates
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  include_used_components: true
+# Discover some devices automatically
+discovery:
+  ignore:
+    - igd
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+recorder:
+# Enables support for tracking state changes over time
+history:
+# View all events in a logbook
+logbook:
+  exclude:
+    domains:
+      - group
+      - light
+      - weather
+      - climate
+      - zwave
+    entities:
+      - binary_sensor.upstairs_thermostat_fan
+      - input_boolean.show_modes
+
+### HTML NOTIFICATION ###
+notify:
+  - name: html5
+    platform: html5
+    gcm_api_key: !secret html5_server_key
+    gcm_sender_id: !secret html5_sender_id
+
+### Z-WAVE CONFIG ###
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+#  polling_interval: 30000
+  # device_config:
+  #   light.master_bathroom_light_level:
+  #     polling_intensity: 1
+  #     refresh_value: 2
+  #     delay: 3
+
+### GOOGLE CALENDAR CONFIG ###
+google:
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
+
+map:
+sun:
+ios:
+    
+### Device Tracking ###
+device_tracker:
+  - platform: tplink
+    host: !secret tplink_ip
+    username: !secret tplink_username
+    password: !secret tplink_password
+    consider_home: 180
+    track_new_devices: false
+
+# Text to speech
+tts:
+  - platform: google

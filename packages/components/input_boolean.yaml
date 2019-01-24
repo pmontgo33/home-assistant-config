@@ -2,6 +2,7 @@
 ## Input Booleans
 #################################################################
 
+input_boolean:
   sleep_mode:
     name: Sleep
     icon: mdi:sleep

@@ -1,0 +1,24 @@
+#################################################################
+## Climate
+#################################################################
+
+### Nest Config ###
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  sensors:
+    monitored_conditions:
+      - 'humidity'
+      - 'hvac_state'
+  binary_sensors:
+    monitored_conditions:
+      - 'online'
+      - 'fan'
+      
+### Honeywell Thermostats ###
+climate:
+  - platform: honeywell
+    username: !secret honeywell_username
+    password: !secret honeywell_password
+    scan_interval: 600
+    region: us

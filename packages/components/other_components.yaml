@@ -1,0 +1,29 @@
+#################################################################
+## Other Components
+#################################################################
+
+### Media Player ###
+media_player:
+  - platform: plex
+    entity_namespace: 'plex'
+
+### Rachio ###
+rachio:
+  api_key: !secret rachio_token
+switch:
+  - platform: rachio
+
+### Weather ###
+weather:
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+    mode: daily
+    
+### Shopping List ###
+shopping_list:
+
+### Automations and Scripts ###
+automation: !include /config/automations.yaml
+automation old: !include_dir_merge_list /config/automations
+script: !include /config/script.yaml
+python_script:

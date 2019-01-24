@@ -2,8 +2,7 @@
 ## Groups
 #################################################################
 
-  ### CARDS ###
-  
+group:
   downstairs_lights:
     name: Downstairs Lights
     entities:
