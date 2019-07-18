@@ -1,24 +1,78 @@
 title: Downstairs
-id: downstairs
+path: downstairs
 icon: mdi:arrow-down
 cards:
-  - type: entities
-    title: Downstairs Lights
+  - type: glance
+    title: Kitchen Lights
     show_header_toggle: true
+    columns: 4
     entities:
-      - light.main_kitchen
-      - light.rear_kitchen
-      - light.cabinets
-      - light.kitchen_chandelier
-  - type: entities
-    title: Downstairs Climate
-    show_header_toggle: false
-    entities:
-      - climate.downstairs
-      - climate.dining_room
-      - climate.kitchen_main
-      - climate.kitchen_rear
-      - climate.foyer
+      - entity: light.main_kitchen
+        name: Main
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: light.rear_kitchen
+        name: Rear
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: light.cabinets
+        name: Cabinets
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: light.kitchen_chandelier
+        name: Chandelier
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: switch.basement_stairs
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+
+  - type: vertical-stack
+    cards:
+      - type: conditional
+        conditions:
+          - entity: sensor.house_mode
+            state_not: "Cool"
+        card: 
+          type: entities
+          title: Downstairs Climate
+          show_header_toggle: false
+          entities:
+            - entity: climate.downstairs
+              name: Living Room
+            - climate.dining_room
+            - climate.kitchen_main
+            - climate.kitchen_rear
+            - climate.foyer
+            - sensor.downstairs_thermostat_humidity
+            
+      - type: conditional
+        conditions:
+          - entity: sensor.house_mode
+            state: "Cool"
+        card: 
+          type: entities
+          title: Downstairs Climate
+          show_header_toggle: false
+          entities:
+            - entity: climate.downstairs
+              name: Downstairs
+            - climate.dining_room
+            - climate.kitchen_main
+            - climate.kitchen_rear
+            - climate.foyer
+            - sensor.downstairs_thermostat_humidity
+        
   - type: vertical-stack
     cards:
       - type: media-control
@@ -31,16 +85,16 @@ cards:
             entity: media_player.kitchen_speaker
           - type: media-control
             entity: media_player.living_room_tv
-  - type: vertical-stack
-    cards:
-      - type: entities
-        entities:
-          - media_player.first_floor
-      - type: glance
-        entities:
-          - entity: media_player.living_room_speaker
-            icon: mdi:speaker
-          - entity: media_player.kitchen_speaker
-            icon: mdi:speaker
-          - entity: media_player.living_room_tv
-            icon: mdi:television-classic
+  # - type: vertical-stack
+  #   cards:
+  #     - type: entities
+  #       entities:
+  #         - media_player.first_floor
+  #     - type: glance
+  #       entities:
+  #         - entity: media_player.living_room_speaker
+  #           icon: mdi:speaker
+  #         - entity: media_player.kitchen_speaker
+  #           icon: mdi:speaker
+  #         - entity: media_player.living_room_tv
+  #           icon: mdi:television-classic

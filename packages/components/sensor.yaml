@@ -81,16 +81,16 @@ sensor:
     state_topic: "home/modes/event"
     icon: mdi:home-plus
   
-  - platform: speedtest
-    monitored_conditions:
-      - ping
-      - download
-      - upload
+  # - platform: speedtest
+  #   monitored_conditions:
+  #     - ping
+  #     - download
+  #     - upload
 
   - platform: history_stats
     name: Living Room Heating
     entity_id: sensor.downstairs_thermostat_hvac_state
-    state: 'heating'
+    state: 'heat'
     type: time
     end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     duration:
@@ -98,7 +98,7 @@ sensor:
       
   - platform: darksky
     api_key: !secret dark_sky_api_key
-    update_interval: 00:15
+    scan_interval: 00:15
     forecast:
       - 0
     monitored_conditions:
@@ -110,3 +110,10 @@ sensor:
       ha_cal_offset_reached:
         friendly_name: HA Cal Offset Reached
         value_template: "{{ states.calendar.home_assistant.attributes.offset_reached }}"
+
+  - platform: version
+    name: Current Version
+    source: local
+  - platform: version
+    name: Latest Version
+    source: hassio

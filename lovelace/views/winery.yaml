@@ -1,0 +1,22 @@
+title: Winery
+path: winery
+icon: mdi:bottle-wine
+badges:
+  - sun.sun
+  - sensor.outside_temperature
+  - sensor.outside_humidity
+cards:
+  - type: glance
+    title: Sensors
+    entities:
+      - entity: sensor.multisensor_temperature
+      - entity: sensor.multisensor_relative_humidity
+      - entity: sensor.multisensor_luminance
+  
+  # - type: entities
+  #   title: Sensors
+  #   show_header_toggle: false
+  #   entities:
+  #     - sensor.multisensor_temperature
+  #     - sensor.multisensor_relative_humidity
+  #     - sensor.multisensor_luminance

@@ -16,9 +16,16 @@ light:
           service: switch.turn_off
           data:
             entity_id: switch.christmas_vegetable
-            
-  # - platform: group
-  #   name: Front Lights
-  #   entities:
-  #     - light.front_porch
-  #     - light.front_post
+
+  - platform: group
+    name: Kitchen
+    entities:
+      - light.rear_kitchen
+      - light.main_kitchen
+      - light.cabinets
+
+hue:
+  bridges:
+    - host: 192.168.0.102
+      # allow_unreachable: true
+      allow_hue_groups: false

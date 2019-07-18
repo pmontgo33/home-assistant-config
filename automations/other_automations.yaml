@@ -108,8 +108,11 @@
       
   - alias: Morning Precipitation Light Notification
     trigger:
-      - platform: time
-        at: '05:05:00'
+      # - platform: time
+      #   at: '05:05:00'
+      - platform: state
+        entity_id: sensor.house_mode_event
+        to: 'Woke Up'
     condition:
       - condition: time
         weekday:
@@ -125,7 +128,7 @@
       - service: light.turn_on
         data:
           entity_id: light.bedside
-          brightness_pct: 1
+          brightness_pct: 10
           color_name: 'blue'
       - delay: 0:10
       - service: light.turn_on
@@ -135,3 +138,25 @@
           color_temp: 366
       - service: light.turn_off
         entity_id: light.bedside
+        
+  - alias: Hassio Update Available Notification
+    trigger:
+      - platform: template
+        value_template: " {{ states('sensor.current_version') != states('sensor.latest_version') }} "
+    action:
+      - service: persistent_notification.create
+        data_template:
+          notification_id: "hassio_update"
+          title: "HassIO Update Available"
+          message: >
+            Version {{ states('sensor.latest_version') }} is available.
+            You are currently running version {{ states('sensor.current_version') }}
+  
+  - alias: Dismiss Hassio Update Notification after update
+    trigger:
+      - platform: template
+        value_template: " {{ states('sensor.current_version') == states('sensor.latest_version') }} "
+    action:
+      - service: persistent_notification.dismiss
+        data:
+          notification_id: "hassio_update"

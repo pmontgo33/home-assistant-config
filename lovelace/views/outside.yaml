@@ -1,18 +1,38 @@
 title: Outside
-id: outside
+path: outside
 icon: mdi:tree
 badges:
   - sun.sun
   - sensor.outside_temperature
   - sensor.outside_humidity
 cards:
-  - type: entities
+  - type: glance
     title: Outside Lights
-    show_header_toggle: true
     entities:
-      - switch.front_lights
-      - switch.deck_light_switch
-      - switch.driveway_switch
+      - entity: switch.front_lights
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: switch.deck_light_switch
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: switch.driveway_switch
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+  - type: horizontal-stack
+    cards:
+    - type: sensor
+      entity: sensor.outside_temperature
+      graph: line
+    - type: sensor
+      entity: sensor.outside_humidity
+      graph: line
+
   - type: vertical-stack
     cards:
     - type: entities

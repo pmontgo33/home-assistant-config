@@ -44,5 +44,10 @@
           entity_id: binary_sensor.someone_home
           state: 'on'
     action:
-      service: input_boolean.turn_off
-      entity_id: input_boolean.away_mode
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.away_mode
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.upstairs
+          away_mode: 'off'
+      

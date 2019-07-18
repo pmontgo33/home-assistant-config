@@ -1,24 +1,42 @@
 title: Upstairs
-id: upstairs
+path: upstairs
 icon: mdi:arrow-up
 cards:
-  - type: entities
+  - type: glance
     title: Master Bedroom
     show_header_toggle: true
     entities:
       - entity: switch.bedroom_light_switch
-        name: Overhead Light
-      - light.bedside
-      - fan.bedroom_fan_level
-      - light.master_bathroom_light_level
+        name: Overhead
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: light.bedside
+        name: Bedside
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: fan.bedroom_fan_level
+        name: Fan
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - entity: light.master_bathroom_light_level
+        name: Bathroom
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
       - entity: switch.humidifier_switch
         name: Humidifier
-  - type: entities
-    title: 3rd Floor
-    show_header_toggle: true
-    entities:
-      - sensor.multisensor_temperature
-      - sensor.multisensor_relative_humidity
+        icon: mdi:spray
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
   - type: entities
     title: Upstairs Climate
     show_header_toggle: false
@@ -28,30 +46,45 @@ cards:
       - climate.hall_bath
       - sensor.upstairs_thermostat_humidity
       - group.upstairs_climate_status
-  - type: picture-entity
-    title: Bedroom Camera
-    entity: camera.bedroom_camera
-    camera_image: camera.bedroom_camera
-    show_info: true
-  - type: picture-entity
-    title: Nursery Camera
-    entity: camera.nursery_camera
-    camera_image: camera.nursery_camera
-    show_info: true
+  - type: entities
+    entities:
+      - input_boolean.show_upstairs_cameras
+  - type: conditional
+    conditions:
+      - entity: input_boolean.show_upstairs_cameras
+        state: "on"
+    card:
+      type: picture-entity
+      title: Bedroom Camera
+      entity: camera.bedroom_camera
+      camera_image: camera.bedroom_camera
+      show_info: true
+  - type: conditional
+    conditions:
+      - entity: input_boolean.show_upstairs_cameras
+        state: "on"
+    card:
+      type: picture-entity
+      title: Nursery Camera
+      entity: camera.nursery_camera
+      camera_image: camera.nursery_camera
+      show_info: true
   - type: entities
     title: Laundry Room
     show_header_toggle: true
     entities:
       - binary_sensor.laundry_leak_sensor
-  - type: horizontal-stack
+  - type: vertical-stack
     cards:
       - type: media-control
         entity: media_player.upstairs
-      - type: media-control
-        entity: media_player.master_speaker
-      - type: media-control
-        entity: media_player.nursery_speaker
-      - type: media-control
-        entity: media_player.3rd_floor_speaker
-      - type: media-control
-        entity: media_player.bedroom_tv
+      - type: horizontal-stack
+        cards:
+          - type: media-control
+            entity: media_player.master_speaker
+          - type: media-control
+            entity: media_player.nursery_speaker
+          - type: media-control
+            entity: media_player.3rd_floor_speaker
+          - type: media-control
+            entity: media_player.bedroom_tv

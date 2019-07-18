@@ -1,6 +1,6 @@
 title: 2nd Floorplan
 icon: mdi:numeric-2-box
-id: floorplan2
+path: floorplan2
 panel: true
 cards:
   - type: picture-elements

@@ -2,6 +2,8 @@
 ## Base Configuration
 #################################################################
 
+default_config:
+
 logger:
   default: info
 
@@ -13,7 +15,11 @@ lovelace:
 config:
 http:
   api_password: !secret api_password
-#   base_url: !secret base_url
+  trusted_proxies:
+    - 172.30.32.0/23
+  use_x_forwarded_for: true
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
 
 cloud:
   google_actions:
@@ -60,8 +66,9 @@ logbook:
 notify:
   - name: html5
     platform: html5
-    gcm_api_key: !secret html5_server_key
-    gcm_sender_id: !secret html5_sender_id
+    vapid_pub_key: !secret html5_vapid_pub_key
+    vapid_prv_key: !secret html5_vapid_prv_key
+    vapid_email: !secret email
 
 ### Z-WAVE CONFIG ###
 zwave:
@@ -94,4 +101,6 @@ device_tracker:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+  
+system_health:

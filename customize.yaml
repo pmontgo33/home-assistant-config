@@ -3,10 +3,9 @@ switch.humidifier_switch:
   icon: mdi:water
 switch.bedroom_light_switch:
   friendly_name: Bedroom Light
-  icon: mdi:ceiling-light
+  icon: mdi:lightbulb
 light.master_bathroom_light_level:
   friendly_name: Bathroom Light
-  icon: mdi:ceiling-light
 switch.front_lights:
   icon: mdi:lightbulb
 switch.deck_light_switch:
@@ -93,11 +92,26 @@ climate.kitchen_main:
   icon: mdi:fire
 climate.kitchen_rear:
   icon: mdi:fire
-cover.main_water_valve:
-  device_class: damper
 light.christmas_tree:
   icon: mdi:pine-tree
 sensor.outside_temperature:
   friendly_name: Outside Temperature
 sensor.outside_humidity:
   friendly_name: Outside Humidity
+light.cabinets:
+  icon: mdi:desk-lamp
+light.kitchen_chandelier:
+  icon: mdi:ceiling-light
+media_player.3rd_floor_speaker: {}
+sensor.downstairs_thermostat_humidity:
+  friendly_name: Downstairs Humidity
+switch.basement_stairs:
+  icon: mdi:stairs
+sensor.multisensor_luminance:
+  icon: mdi:lightbulb-on-outline
+person.patrick:
+  entity_picture: '"/local/pat_pic.jpg"'
+person.lina:
+  entity_picture: '"/local/lina_pic.jpg"'
+device_tracker.patrick_phone:
+  entity_picture: '"/local/pat_pic.jpg"'

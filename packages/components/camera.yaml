@@ -2,23 +2,28 @@
 ## Cameras
 #################################################################
 
+
 ffmpeg:
 #   ffmpeg_bin: /usr/bin/ffmpeg
+stream:
 amcrest:
   - host: !secret amcrest_nursery_ip
     username: !secret amcrest_nursery_username
     password: !secret amcrest_nursery_password
-    resolution: high
-    stream_source: mjpeg
-    name: "Nursery Camera"
+    stream_source: rtsp
+    name: Nursery Camera
     sensors:
       - motion_detector
 
 camera:
   - platform: ffmpeg
     name: Bedroom Camera
-    input: /dev/video0
+    input: /dev/video1
+  - platform: generic
+    name: bedcam
+    stream_source: "/dev/video1"
+    still_image_url: /dev/video1
   # - platform: ffmpeg
   #   input: !secret nursery_input
   #   name: Nursery Camera
-  - platform: amcrest
+  # - platform: amcrest

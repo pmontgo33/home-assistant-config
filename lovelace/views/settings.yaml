@@ -1,5 +1,5 @@
 title: Settings
-id: settings
+path: settings
 icon: mdi:tune
 cards:
   - type: entities
@@ -15,16 +15,34 @@ cards:
         type: custom:toggle-lock-entity-row
   - type: entities
     title: Automations and Scripts
-    show_header_toggle: true
+    show_header_toggle: false
     entities:
       - group.all_automations
       - group.all_scripts
-  - type: shopping-list
-    title: To Do List
+  - type: horizontal-stack
+    cards:
+      - type: gauge
+        entity: sensor.memory_use_percent
+        name: Memory Use
+        severity:
+          green: 0
+          yellow: 33
+          red: 67
+      - type: gauge
+        entity: sensor.processor_use
+        name: Processor Use
+        severity:
+          green: 0
+          yellow: 33
+          red: 67
   - type: entities
     title: Speedtest
-    show_header_toggle: true
+    show_header_toggle: false
     entities:
       - sensor.speedtest_ping
       - sensor.speedtest_download
       - sensor.speedtest_upload
+  - type: shopping-list
+    title: To Do List
+
+  

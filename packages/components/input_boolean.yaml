@@ -13,6 +13,7 @@ input_boolean:
   
   coming_home:
     name: Coming Home
+    initial: off
     icon: mdi:car-connected
 
   waking_up:
@@ -34,3 +35,7 @@ input_boolean:
   christmas_season:
     name: Christmas Season
     icon: mdi:snowman
+
+  show_upstairs_cameras:
+    name: Show Cameras
+    icon: mdi:cctv

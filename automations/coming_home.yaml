@@ -29,6 +29,23 @@
         event_type: timer.finished
         event_data:
           entity_id: timer.coming_home
+      - platform: state
+        entity_id: timer.coming_home
+        to: 'idle'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.coming_home 
+  
+  - alias: Shut off coming_home switch when Arrived Home event
+    trigger:
+      - platform: state
+        entity_id: sensor.house_mode_event
+        to: 'Arrived Home'
+    condition:
+      - condition: state
+        entity_id: input_boolean.coming_home
+        state: 'on'
     action:
       - service: input_boolean.turn_off
         data:
@@ -77,6 +94,13 @@
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.coming_home
+      - service: logbook.log
+        data_template:
+          name: Coming Home Activated
+          message: >
+            {{ trigger.entity_id }} from {{ trigger.from_state }} to {{ trigger.to_state}}
+      
+      
           
   # - alias: Coming Home
   #   trigger:

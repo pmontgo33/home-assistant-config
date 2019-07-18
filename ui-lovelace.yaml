@@ -19,6 +19,7 @@ views:
   - !include lovelace/views/downstairs.yaml
   - !include lovelace/views/upstairs.yaml
   - !include lovelace/views/outside.yaml
+  - !include lovelace/views/winery.yaml
   - !include lovelace/views/cameras.yaml
   - !include lovelace/views/settings.yaml
   - !include lovelace/views/testing.yaml

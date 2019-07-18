@@ -72,13 +72,16 @@
       - service: timer.cancel
         entity_id: timer.waking_up
   
-  - alias: Shut off waking_up switch when timer finishes
+  - alias: Shut off sleep_mode and waking_up switches when timer finishes
     trigger:
       - platform: event
         event_type: timer.finished
         event_data:
           entity_id: timer.waking_up
     action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.sleep_mode
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.waking_up
@@ -89,6 +92,10 @@
         at: '6:00:00'
       - platform: webhook
         webhook_id: !secret webhook_sleep_mode_off
+    condition:
+      condition: state
+      entity_id: input_boolean.sleep_mode
+      state: 'on'
     action:
       service: input_boolean.turn_on
       entity_id: input_boolean.waking_up

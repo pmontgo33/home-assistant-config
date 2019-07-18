@@ -1,10 +1,10 @@
 title: Home
-id: home
+path: home
 icon: mdi:home-assistant
 badges:
   # - updater.updater
-  - device_tracker.patrick_phone
-  - device_tracker.lina_phone
+  - person.patrick
+  - person.lina
 cards:
   - type: entity-filter
     show_empty: false
@@ -67,7 +67,7 @@ cards:
     id: home_climate_heat
     conditions:
       - entity: input_select.home_climate_mode
-        state: 'Heat'
+        state_not: 'Cool'
     card:
       type: entities
       title: Climate
@@ -101,15 +101,9 @@ cards:
           label: Downstairs
         - entity: climate.downstairs
           name: Downstairs
-        - climate.dining_room
-        - climate.kitchen_main
-        - climate.kitchen_rear
-        - climate.foyer
         - type: section
           label: Upstairs
         - climate.upstairs
-        - climate.master_bath
-        - climate.hall_bath
   
   - type: weather-forecast
     entity: weather.dark_sky

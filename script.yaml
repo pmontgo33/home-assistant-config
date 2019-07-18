@@ -56,12 +56,12 @@ wake_script:
     data: {}
     service: script.brighten_master_bath
 
-cast_nursery_camera:
-  alias: Cast Nursery Camera
-  sequence:
-  - alias: send nursery cam to living room tv
-    service: media_player.play_media
-    data:
-      entity_id: media_player.bedroom_tv
-      media_content_type: 'video'
-      media_content_id: !secret nursery_input
+# cast_nursery_camera:
+#   alias: Cast Nursery Camera
+#   sequence:
+#   - alias: send nursery cam to living room tv
+#     service: media_player.play_media
+#     data:
+#       entity_id: media_player.bedroom_tv
+#       media_content_type: 'video'
+#       media_content_id: !secret nursery_input
